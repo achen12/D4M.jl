@@ -1,36 +1,61 @@
-StringOrNumArray = Union(String,Array{Number})
+StringOrNumArray = Union{AbstractString,Array,Number}
+
+include("StrUnique.jl")
+
 type Assoc
-    row::Array # Type Julia Unknown TODO
-    col:Array # Type Julia Unknown TODO
-    val::Array # Type Julia Unknown TODO
-    A::Array   # Type Julia Unknown TODO
+    row::Array{Union{AbstractString,Number}}
+    col::Array{Union{AbstractString,Number}}
+    val::Array{Union{AbstractString,Number}}
+    A::AbstractSparseMatrix
 
-    function Assoc(row::StringOrNumArray,col::StringOrNumArray,val::StringOrNumArray) = new(row,col,val,min) #Setting Default Function
-    function Assoc(row::StringOrNumArray,col::StringOrNumArray,val::StringOrNumArray,func::Function)
-        if isempty(row) || isempty(col) || isempty(val)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
-        return #Escape
-        end
-        
-        i = row;
-        j = col;
-        v = val;
+    Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) #Setting Default Function
 
-        if isa(row,String)
-            [row i_out2in i] = StrUnique(row,"first"); #TODO StrUnique Needs to be implemented
+    function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function)
+        if isempty(rowIn) || isempty(colIn) || isempty(valIn)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
+            return #Escape
+            end
+        if isa(rowIn,Number)
+            x = rowIn
+            rowIn = Array{Number}(1)
+            rowIn[1] = x
         end
 
-        if isa(col,String)
-            [col j_out2in j] = StrUnique(col,"first"); #TODO StrUnique Needs to be implemented
+        if isa(colIn,Number)
+            x = colIn
+            colIn = Array{Number}(1)
+            colIn[1] = x
         end
-        if isa(val,String)
-            [val v_out2in v] = StrUnique(val,"first"); #TODO StrUnique Needs to be implemented
+
+
+        if isa(valIn,Number)
+            x = valIn
+            valIn = Array{Number}(1)
+            valIn[1] = x
+        end
+        i = rowIn;
+        j = colIn;
+        v = valIn;
+        row = rowIn;
+        col = colIn;
+        val = valIn;
+
+        if isa(rowIn,AbstractString)
+            row, i_out2in, i = StrUnique(rowIn); 
+            end
+
+        if isa(colIn,AbstractString)
+            col, j_out2in, j = StrUnique(colIn); #TODO StrUnique Needs to be implemented
+            end
+
+        if isa(valIn,AbstractString)
+            val, v_out2in, v = StrUnique(valIn); #TODO StrUnique Needs to be implemented
             #TODO Global Variables needs to be updated.
-            global AssocOldValStrMatGlobal, AssocNewValStrGlobal, AssocValStrIndexGlobal, AssocValCharIndexGlobal
+#            global AssocOldValStrMatGlobal, AssocNewValStrGlobal, AssocValStrIndexGlobal, AssocValCharIndexGlobal
             #AssocOldValStrMatGlobal = str2mat(val) #TODO implement str2mat
-            AssocNewValStrGlobal = val
-            AssocNewValstrGlobal = 0
-            AssocValStrIndexGlobal = 1
-            AssocValCharIndexGlobal = 1
+ #           AssocNewValStrGlobal = val
+  #          AssocNewValstrGlobal = 0
+   #         AssocValStrIndexGlobal = 1
+    #        AssocValCharIndexGlobal = 1
 
 
             #=
@@ -45,26 +70,39 @@ type Assoc
 
             =#
            
-        end
+           end 
 
         #Marker Old Code: Create sparse Connection matrix.
-        NMax = max([length(i) length(j) length(v)]);
+        NMax = maximum([length(i) length(j) length(v)]);
         if length(i) == 1
-            i = repmat(i,NMax,1)
-        end
-        if length(j) == 1
-            j = repmat(j,NMax,1)
-        end
-        if length(v) == 1
-            v = repmat(v,NMax,1)
-        end
+            x = i[1]
+            i = Array{typeof(x)}(NMax)
+            for n = 1:NMax
+                i[n] = x
+            end
+            end
 
-        #TODO Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)
-        #Contact Tim Holy and Julio Hoffiman. They seems to have lots of thought on this.
+        if length(j) == 1
+            x = j[1]
+            j = Array{typeof(x)}(NMax)
+            for n = 1:NMax
+                j[n] = x
+            end
+            end
+
+        if length(v) == 1
+            x = v[1]
+            v = Array{typeof(x)}(NMax)
+            for n = 1:NMax
+                v[n] = x
+            end
+            end
+        A = sparse(i,j,v,length(i),length(j),(+));
+            
+        #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
         
         #End bit with val string.  Unknown purpose.
-
+        return new(row,col,val,A)
+        end
     end
-end
-
