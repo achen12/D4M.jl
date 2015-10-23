@@ -1,7 +1,11 @@
-function StrUnique(inputString::AbstractString)
+function StrUnique(inputString::AbstractString, csv= false)
     #TODO backwardMapping from unique string to index is not implemented, because there doesn't seem to be a application for such an array
     #Note: The unique output is sorted.
-    strA = split(inputString,',')
+    separator = inputString[end]
+    if(csv == true)
+        separator = ','
+    end
+    strA = split(inputString,separator)
     if strA[end] == ""
         strA = strA[1:end-1]
     end

@@ -1,15 +1,21 @@
 StringOrNumArray = Union{AbstractString,Array,Number}
 
 include("StrUnique.jl")
-
+include("Assoc/getindex.jl")
 type Assoc
     row::Array{Union{AbstractString,Number}}
     col::Array{Union{AbstractString,Number}}
     val::Array{Union{AbstractString,Number}}
     A::AbstractSparseMatrix
+    
+    Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) 
+    Assoc(row::Array{Int64}, col::Array{Int64},val::Array{Int64},A::AbstractSparseMatrix) = new(row,col,val,A)
+    #Setting Default Function
+    
 
-    Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) #Setting Default Function
-
+    function Assoc(rowIn::Array{Union{AbstractString,Number}}, colIn::Array{Union{AbstractString,Number}}, valIn::Array{Union{AbstractString,Number}}, AIn::AbstractSparseMatrix)
+        return new(rowIn,colIn,valIn,AIn)
+        end
     function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function)
         if isempty(rowIn) || isempty(colIn) || isempty(valIn)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
             return #Escape

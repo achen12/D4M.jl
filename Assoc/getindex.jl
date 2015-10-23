@@ -5,11 +5,11 @@ StringOrNumArray  = Union{AbstractString,Array,Number}
 
 function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
     #Check if A is empty
-    if nzz(A.A) == 0
+    if nnz(A.A) == 0
     return Assoc(i,j,0,(+))
     end
 
-    return Assoc(i,j,A.val,A.A[i,j])
+    return Assoc(A.row[i],A.col[j],A.val,A.A[i,j])
     end
 
 #Singular Case
@@ -22,14 +22,14 @@ getindex(A::Assoc,i::Any,j::Int64)         = getindex(A,i,[j])
 getindex(A::Assoc,i::Colon,j::Any)         = getindex(A,1:size(A.row,1),j)
 getindex(A::Assoc,i::Any,j::Colon)         = getindex(A,i,1:size(A.col,1))
 
-getindex(A::Assoc,i::Range,j::Any)         = getindex(A,collection(i),j)
-getindex(A::Assoc,i::Any,j::Range)         = getindex(A,i,collection(j))
+getindex(A::Assoc,i::Range,j::Any)         = getindex(A,collect(i),j)
+getindex(A::Assoc,i::Any,j::Range)         = getindex(A,i,collect(j))
 
 
 #Variations of Strings   TODO Make not horrible
 
-getindex(A::Assoc, i::AbstractString, j::Any)  = getindex(A, find( x -> in(x,StrUnique(i)[1]),x), j)
-getindex(A::Assoc, i::Any ,j::AbstractString)  = getindex(A, i ,find( x -> in(x,StrUnique(j)[1]),x))
+getindex(A::Assoc, i::AbstractString, j::Any)  = getindex(A, find( x -> in(x,StrUnique(i)[1]),A.row), j)
+getindex(A::Assoc, i::Any ,j::AbstractString)  = getindex(A, i ,find( x -> in(x,StrUnique(j)[1]),A.col))
 
 
 #=
