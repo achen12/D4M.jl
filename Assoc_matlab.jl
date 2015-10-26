@@ -1,7 +1,6 @@
 StringOrNumArray = Union{AbstractString,Array,Number}
 
 include("StrUnique.jl")
-include("Assoc/getindex.jl")
 type Assoc
     row::Array{Union{AbstractString,Number}}
     col::Array{Union{AbstractString,Number}}
@@ -112,3 +111,10 @@ type Assoc
         return new(row,col,val,A)
         end
     end
+
+
+
+include("./Assoc_matlab/getindex.jl")
+include("./Assoc_matlab/no.jl")
+include("./Assoc_matlab/sum.jl")
+include("./Assoc_matlab/isempty.jl")

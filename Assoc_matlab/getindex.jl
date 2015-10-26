@@ -2,7 +2,6 @@
 import Base.getindex
 StringOrNumArray  = Union{AbstractString,Array,Number}
 
-
 function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
     #Check if A is empty
     if nnz(A.A) == 0
@@ -32,7 +31,7 @@ getindex(A::Assoc, i::AbstractString, j::Any)  = getindex(A, find( x -> in(x,Str
 getindex(A::Assoc, i::Any ,j::AbstractString)  = getindex(A, i ,find( x -> in(x,StrUnique(j)[1]),A.col))
 
 
-#=
+#= Scrap Code
 function getindex(A::Assoc,i::StringOrNumArray,j::StringOrNumArray)
     #Check if A is empty
     if nnz(A.A) == 0
