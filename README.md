@@ -1,4 +1,4 @@
-# julia-d4m
+# Julia-D4M
 A D4M module for Julia.  D4M was developed in MATLAB by Dr Jeremy Kepner and his team at Lincoln Labs.
 As the development goes, a few possible implementations of D4M will be explored.
  * The first implementation will be an implementation that is nearly 1:1 with the matlab implementation.  This is filed as Assoc\_matlab 
