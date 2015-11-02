@@ -1,6 +1,6 @@
 #=Currently to test Assoc please use include()
 =#
-include("Assoc_matlab.jl");
+include("Assoc_orig.jl");
 
 A = Assoc("a|b|c|d|","v,x,y,z,",[1,2,3,4]);
 a = A["a,b,","x,v,"];
