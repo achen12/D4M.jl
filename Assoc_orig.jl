@@ -103,34 +103,25 @@ type Assoc
             end
             end
 
-        if isa(i[1],AbstractString)
             row = unique(i)
             sort!(row)
             i = [searchsortedfirst(row,x) for x in i]
             i = convert(AbstractArray{Int64},i)
-        end
         
-        if isa(j[1],AbstractString)
             col = unique(j)
             sort!(col)
             j = [searchsortedfirst(col,x) for x in j]
             j = convert(AbstractArray{Int64},j)
-        end
         
         #v is array of string clause.
-        if isa(v[1],AbstractString)
             val = unique(v)
             sort!(val)
             v = [searchsortedfirst(val,x) for x in v]
             v = convert(AbstractArray{Int64},v)
-        end
-        dump(i[1])
-        dump(j[1])
-        dump(v[1])
 
         i = convert(AbstractArray{Int64},i)
 
-        A = sparse(i,j,v,length(i),length(j),(+));
+        A = sparse(i,j,v,length(row),length(col),(+));
             
         #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
