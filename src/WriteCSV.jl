@@ -17,11 +17,13 @@ for r = 1:size(A.row,1)
     print(iostream,A.row[r])
     for c = 1:size(A.col,1)
         write(iostream,',')
-        if valMap #Mapping needed
-            write(iostream,A.val[A.A[r,c]])
-        else #Mappping not needed.
-            print(iostream,A.A[r,c])
-        end
+        if A.A[r,c] != 0
+            if valMap #Mapping needed
+                write(iostream,A.val[A.A[r,c]])
+            else #Mappping not needed.
+                print(iostream,A.A[r,c])
+            end
+            end
     end
     write(iostream,"\n")
     flush(iostream) #Clear buffer for each line.

@@ -4,10 +4,10 @@ function *(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A
     Bt = B
-    if(!isequal(A.val, [""]))
+    if(!isa(A.val[1], Number ))
         At = logical(A)
     end
-    if(!isequal(B.val,[""]))
+    if(!isa(B.val[1],Number))
         Bt = logical(B)
     end
     ## A*B operation
@@ -30,5 +30,5 @@ function *(A::Assoc,B::Assoc)
     ABcol = ABcol[nonZeroCol]
     ABA = ABA[nonZeroRow,nonZeroCol]
 
-    return Assoc(ABrow,ABcol,promote([""],A.val)[1],ABA)
+    return Assoc(ABrow,ABcol,promote([1.0],A.val)[1],ABA)
 end

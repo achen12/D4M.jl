@@ -11,6 +11,8 @@ function StrUnique(inputString::AbstractString, csv= false)
     end
     uniqueSeq = unique(strA)
     sort!(uniqueSeq)
+
+
     forwardMapping = [findfirst(uniqueSeq,x) for x in strA]
     backwardMapping = zeros(1,length(forwardMapping))
 

@@ -1,3 +1,8 @@
+import Base.isless
+isless(A::Int64,B::AbstractString) = false
+isless(A::AbstractString,B::Int64) = true
+
+
 StringOrNumArray = Union{AbstractString,Array,Number}
 
 include("StrUnique.jl")
@@ -46,38 +51,40 @@ type Assoc
 
         if isa(rowIn,AbstractString)
             row, i_out2in, i = StrUnique(rowIn); 
+            else 
+            row = unique(i)
+            sort!(row)
+            i = [searchsortedfirst(row,x) for x in i]
+            i = convert(AbstractArray{Int64},i)
+
             end
 
         if isa(colIn,AbstractString)
-            col, j_out2in, j = StrUnique(colIn); #TODO StrUnique Needs to be implemented
+            col, j_out2in, j = StrUnique(colIn);
+            else
+            col = unique(j)
+            sort!(col)
+            j = [searchsortedfirst(col,x) for x in j]
+            j = convert(AbstractArray{Int64},j)
+
             end
 
         if isa(valIn,AbstractString)
-            val, v_out2in, v = StrUnique(valIn); #TODO StrUnique Needs to be implemented
-            #TODO Global Variables needs to be updated.
-#            global AssocOldValStrMatGlobal, AssocNewValStrGlobal, AssocValStrIndexGlobal, AssocValCharIndexGlobal
-            #AssocOldValStrMatGlobal = str2mat(val) #TODO implement str2mat
- #           AssocNewValStrGlobal = val
-  #          AssocNewValstrGlobal = 0
-   #         AssocValStrIndexGlobal = 1
-    #        AssocValCharIndexGlobal = 1
-
-
-            #=
-            Variables: AssocOldValStrMatGlobal, AssocNewValStrGlobal, AssocValStrIndexGlobal,AssocValCharIndexGlobal
-
-            Updating:
-            AssocOldValStrMatGlobal = Str2mat(val) #Changed Val
-            AssocNewValStrGlobal = val #OldVal
-            AssocNewValStrGlobal = 0;
-            AssocValStrIndexGlobal = 1;
-            AssocValCharIndexGlobal = 1;
-
-            =#
-           
+            val, v_out2in, v = StrUnique(valIn);           
+            else
+            val = unique(v)
+            sort!(val)
+            k = 0
+            if val[1] == ""
+                k =-1
+            end
+            v = [searchsortedfirst(val,x)+ k  for x in v]
+            v = convert(AbstractArray{Int64},v)
+            if val[1] == ""
+                val = val[2:end]
+            end
            end 
 
-        #Marker Old Code: Create sparse Connection matrix.
         NMax = maximum([length(i) length(j) length(v)]);
         if length(i) == 1
             x = i[1]
@@ -103,37 +110,26 @@ type Assoc
             end
             end
 
-            row = unique(i)
-            sort!(row)
-            i = [searchsortedfirst(row,x) for x in i]
-            i = convert(AbstractArray{Int64},i)
-        
-            col = unique(j)
-            sort!(col)
-            j = [searchsortedfirst(col,x) for x in j]
-            j = convert(AbstractArray{Int64},j)
-        
-        #v is array of string clause.
-            val = unique(v)
-            sort!(val)
-            v = [searchsortedfirst(val,x) for x in v]
-            v = convert(AbstractArray{Int64},v)
 
-        i = convert(AbstractArray{Int64},i)
+        
 
+        #i = convert(AbstractArray{Int64},i)
+        if isa (val[1],AbstractString) #If the values are string, assume that there are duplicates and take the earliest one ( the numbers should be the same)
+        A = sparse(i,j,v,length(row),length(col),min);
+        else
         A = sparse(i,j,v,length(row),length(col),(+));
-            
+        end
         #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
         
         #End bit with val string.  Unknown purpose.
-        return new(row,col,val,A)
+        return condense(new(row,col,val,A))
         end
     end
 
 
-
 include("./Assoc_orig/getindex.jl")
+include("./Assoc_orig/condense.jl")
 include("./Assoc_orig/no.jl")
 include("./Assoc_orig/sum.jl")
 include("./Assoc_orig/isempty.jl")
@@ -142,3 +138,7 @@ include("./Assoc_orig/and.jl")
 include("./Assoc_orig/print.jl")
 include("./Assoc_orig/transpose.jl")
 include("./Assoc_orig/multiply.jl")
+include("./Assoc_orig/rdivide.jl")
+include("./Assoc_orig/sqIn.jl")
+include("./Assoc_orig/sqOut.jl")
+include("./Assoc_orig/adj.jl")
