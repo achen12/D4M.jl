@@ -1,0 +1,3 @@
+function emptyAssoc()
+    Assoc()
+end

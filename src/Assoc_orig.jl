@@ -22,7 +22,8 @@ type Assoc
         end
     function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function)
         if isempty(rowIn) || isempty(colIn) || isempty(valIn)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
-            return #Escape
+            x = Array{Union{AbstractString,Number}}()
+            return Assoc(x,x,x,spzeros(1,1));
             end
         if isa(rowIn,Number)
             x = rowIn
@@ -141,4 +142,8 @@ include("./Assoc_orig/multiply.jl")
 include("./Assoc_orig/rdivide.jl")
 include("./Assoc_orig/sqIn.jl")
 include("./Assoc_orig/sqOut.jl")
-include("./Assoc_orig/adj.jl")
+include("./Assoc_orig/accessor.jl")
+include("./Assoc_orig/find.jl")
+include("./Assoc_orig/diag.jl")
+include("./Assoc_orig/plus.jl")
+include("./Assoc_orig/deepcondense.jl")

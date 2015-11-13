@@ -14,9 +14,11 @@ function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
 #Singular Case
 getindex(A::Assoc,i::Any)                  = getindex(A,i,:)
 
-##Variations between Int, Array{Int}, Colon,Range #TODO Make not horrible
-getindex(A::Assoc,i::Int64,j::Any)         = getindex(A,[i],j)
-getindex(A::Assoc,i::Any,j::Int64)         = getindex(A,i,[j])
+
+
+#Variations between Int, Array{Int}, Colon,Range #TODO Make not horrible
+getindex(A::Assoc,i::Int64,j)         = getindex(A,[i],j)
+getindex(A::Assoc,i,j::Int64)         = getindex(A,i,[j])
 
 getindex(A::Assoc,i::Colon,j::Any)         = getindex(A,1:size(A.row,1),j)
 getindex(A::Assoc,i::Any,j::Colon)         = getindex(A,i,1:size(A.col,1))
@@ -34,7 +36,6 @@ getindex(A::Assoc, i::Any ,j::AbstractString)  = getindex(A, i ,find( x -> in(x,
 
 getindex(A::Assoc, i::Regex, j::Any)  = getindex(A, find( x -> ismatch(i,x),A.row), j)
 getindex(A::Assoc, i::Any, j::Regex)  = getindex(A, i, find( x -> ismatch(j,x),A.col))
-
 #= Scrap Code
 function getindex(A::Assoc,i::StringOrNumArray,j::StringOrNumArray)
     #Check if A is empty

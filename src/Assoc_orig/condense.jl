@@ -5,5 +5,6 @@ function condense(A::Assoc)
     Newcol = A.col[nonZeroCol]
     NewA = A.A[nonZeroRow,nonZeroCol]
 
+
     return Assoc(Newrow,Newcol,A.val,NewA)
 end

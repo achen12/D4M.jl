@@ -22,13 +22,8 @@ function *(A::Assoc,B::Assoc)
 
     ABA = A.A[:,AintMap]*B.A[BintMap,:]
 
-    ##Condense
-    nonZeroCol = find(x->x!=0,[sum(ABA,1)[1,i] for i in 1:size(ABcol,1)])
-    nonZeroRow = find(x->x!=0,[sum(ABA,2)[i,1] for i in 1:size(ABrow,1)])
 
-    ABrow = ABrow[nonZeroRow]
-    ABcol = ABcol[nonZeroCol]
-    ABA = ABA[nonZeroRow,nonZeroCol]
+    AB = Assoc(ABrow,ABcol,promote([1.0,A.val])[1],ABA)
 
-    return Assoc(ABrow,ABcol,promote([1.0],A.val)[1],ABA)
+    return condense(AB)
 end
