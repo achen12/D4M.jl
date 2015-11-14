@@ -115,7 +115,7 @@ type Assoc
         
 
         #i = convert(AbstractArray{Int64},i)
-        if isa (val[1],AbstractString) #If the values are string, assume that there are duplicates and take the earliest one ( the numbers should be the same)
+        if isa(val[1],AbstractString) #If the values are string, assume that there are duplicates and take the earliest one ( the numbers should be the same)
         A = sparse(i,j,v,length(row),length(col),min);
         else
         A = sparse(i,j,v,length(row),length(col),(+));
