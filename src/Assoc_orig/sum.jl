@@ -6,5 +6,7 @@ function sum(A::Assoc, dim::Int64)
     
         return condense(Assoc(A.row,promote([1.0],A.col)[1], promote([1.0],A.val)[1],sparse(sum(A.A,2))))
     end
-
 end
+
+
+sum(A::Assoc) = sum(findnz(A.A)[3])
