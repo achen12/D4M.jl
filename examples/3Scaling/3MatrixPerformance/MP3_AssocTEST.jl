@@ -1,4 +1,3 @@
-using D4M
 
 n = 2 .^ [6 6 7 8 9 10 11 12 13 14 15 16 17 18]
 
@@ -25,12 +24,12 @@ for i = 1:length(n)
 
     tic()
     C = A*B
-    sparse_time[i] = 2*sum(C)
+    assoc_time[i] = toq()
+    assoc_flops[i] = 2*sum(C)
     ii, jj, vv = find(C)
     assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     assoc_gflops[i] = assoc_flops[i] ./ assoc_time[i] ./ 1e9
     println("Time: ", assoc_time[i])
     println("GFlops: ", assoc_gflops[i])
     println("GBytes: ", assoc_gbytes[i])
-
 end

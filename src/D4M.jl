@@ -5,7 +5,7 @@ module D4M
     example_pDB04_DegreeTEST = x -> include("../examples/3Scaling/2ParallelDatabase/pDB04_DegreeTEST.jl")
     example_AI1_SetupTEST = x -> include("../examples/1Intro/1AssocIntro/AI1_SetupTEST.jl")
     example_AI2_SubsrefTEST = x -> include("../examples/1Intro/1AssocIntro/AI2_SubsrefTEST.jl")
-    example_AI3_MathTEST = x -> include("../examples/1Intro/1AssocIntro/AI3_MathiTEST.jl")
+    example_AI3_MathTEST = x -> include("../examples/1Intro/1AssocIntro/AI3_MathTEST.jl")
     example_AI4_AdvConstructTEST = x -> include("../examples/1Intro/1AssocIntro/AI4_AdvConstructTEST.jl")
 
 end

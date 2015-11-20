@@ -17,7 +17,14 @@ getindex(A::Assoc,i::Any)                  = getindex(A,i,:)
 PreviousTypes = Array{Int64}
 
 
+
 #Variations between Int, Array{Int}, Colon,Range 
+getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::PreviousTypes)                                       = getindex(A,find(x-> x in i,A.row),j)
+getindex(A::Assoc,i::PreviousTypes,j::Array{Union{AbstractString,Number}})                                       = getindex(A,i,find(x-> x in i,A.col))
+getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::Array{Union{AbstractString,Number}})                 = getindex(A,find(x-> x in i,A.row),find(x-> x in i,A.col))
+
+PreviousTypes = Union{PreviousTypes,Array{Union{AbstractString,Number}}}
+
 getindex(A::Assoc,i::Int64,j::PreviousTypes)         = getindex(A,[i],j)
 getindex(A::Assoc,i::PreviousTypes,j::Int64)         = getindex(A,i,[j])
 getindex(A::Assoc,i::Int64,j::Int64)                 = getindex(A,[i],[j])

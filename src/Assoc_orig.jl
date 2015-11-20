@@ -20,6 +20,7 @@ type Assoc
     function Assoc(rowIn::Array{Union{AbstractString,Number}}, colIn::Array{Union{AbstractString,Number}}, valIn::Array{Union{AbstractString,Number}}, AIn::AbstractSparseMatrix)
         return new(rowIn,colIn,valIn,AIn)
         end
+
     function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function)
         if isempty(rowIn) || isempty(colIn) || isempty(valIn)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
             x = Array{Union{AbstractString,Number}}()
@@ -55,7 +56,7 @@ type Assoc
             else 
             row = unique(i)
             sort!(row)
-            i = [searchsortedfirst(row,x) for x in i]
+            i = AbstractArray([Int64(searchsortedfirst(row,x)) for x in i])
             i = convert(AbstractArray{Int64},i)
 
             end
@@ -116,15 +117,15 @@ type Assoc
 
         #i = convert(AbstractArray{Int64},i)
         if isa(val[1],AbstractString) #If the values are string, assume that there are duplicates and take the earliest one ( the numbers should be the same)
-        A = sparse(i,j,v,length(row),length(col),min);
+            A = sparse(i,j,v,length(row),length(col),min);
         else
-        A = sparse(i,j,v,length(row),length(col),(+));
+            A = sparse(i,j,v,length(row),length(col),(+));
         end
         #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
         
         #End bit with val string.  Unknown purpose.
-        return condense(new(row,col,val,A))
+        return new(row,col,val,A)
         end
     end
 

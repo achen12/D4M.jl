@@ -6,14 +6,16 @@ function StrUnique(inputString::AbstractString, csv= false)
         separator = ','
     end
     strA = split(inputString,separator)
-    if strA[end] == ""
+    if str[end] == separator
         strA = strA[1:end-1]
     end
+
     uniqueSeq = unique(strA)
     sort!(uniqueSeq)
 
 
-    forwardMapping = [findfirst(uniqueSeq,x) for x in strA]
+    forwardMapping = [searchsortedfirst(uniqueSeq,x) for x in strA]
+
     backwardMapping = zeros(1,length(forwardMapping))
 
     return uniqueSeq,backwardMapping,forwardMapping
