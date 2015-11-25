@@ -1,3 +1,5 @@
+import Base.+
++(A::Assoc,B::Assoc) = plus(A::Assoc,B::Assoc)
 function plus(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A

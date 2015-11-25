@@ -1,5 +1,4 @@
 import Base.*
-
 function *(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A
@@ -16,7 +15,7 @@ function *(A::Assoc,B::Assoc)
     #@time ABintersect = intersect(A.col,B.row)
 
     #Improve intersect with unique sorted sets
-    ABintersect = Int64[]
+    ABintersect = []
     temp_index_A = 1
     temp_index_B = 1
     while (temp_index_A <= length(A.col)) & (temp_index_B <= length(B.row))
