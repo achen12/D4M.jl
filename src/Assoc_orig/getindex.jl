@@ -2,6 +2,7 @@
 import Base.getindex
 StringOrNumArray  = Union{AbstractString,Array,Number}
 
+#The Base getindex function which most higher level function would call upon.
 function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
     #Check if A is empty
     if nnz(A.A) == 0
@@ -18,7 +19,12 @@ PreviousTypes = Array{Int64}
 
 
 
-#Variations between Int, Array{Int}, Colon,Range 
+#Variations by derivations
+#Each of the additional type would call upon the base functions above.
+#It does so by building up row and column combinations of the new type with all previous types.
+
+#Get index with basic addressing.
+#Variations between Element, Array, Colon, Range
 getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::PreviousTypes)                                       = getindex(A,find(x-> x in i,A.row),j)
 getindex(A::Assoc,i::PreviousTypes,j::Array{Union{AbstractString,Number}})                                       = getindex(A,i,find(x-> x in i,A.col))
 getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::Array{Union{AbstractString,Number}})                 = getindex(A,find(x-> x in i,A.row),find(x-> x in i,A.col))
@@ -43,16 +49,25 @@ getindex(A::Assoc,i::Range,j::Range)                 = getindex(A,collect(i),col
 
 PreviousTypes = Union{PreviousTypes,Range}
 
-#Variations of Strings  
 
+
+#Variations of Single Sequence Strings that is separated by a single character separator.
 getindex(A::Assoc, i::AbstractString, j::PreviousTypes)   = getindex(A, find( x -> in(x,StrUnique(i)[1]),A.row), j)
 getindex(A::Assoc, i::PreviousTypes ,j::AbstractString)   = getindex(A, i ,find( x -> in(x,StrUnique(j)[1]),A.col))
 getindex(A::Assoc, i::AbstractString ,j::AbstractString)  = getindex(A, find( x -> in(x,StrUnique(i)[1]),A.row) ,find( x -> in(x,StrUnique(j)[1]),A.col))
 
 PreviousTypes = Union{PreviousTypes,AbstractString}
 
-#Regex
 
+#Variations by Regex
 getindex(A::Assoc, i::Regex, j::PreviousTypes)  = getindex(A, find( x -> ismatch(i,x),A.row), j)
 getindex(A::Assoc, i::PreviousTypes, j::Regex)  = getindex(A, i, find( x -> ismatch(j,x),A.col))
-getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch(i,x),A.row), find( x -> ismatch(j,x),A.col))
+getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch(i,x),A.row), find( x -> ismatch(j,x),A.col)
+
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+)

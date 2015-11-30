@@ -1,4 +1,12 @@
 import Base.*
+
+#=
+
+* : matrix multiply between two Assoc.
+
+If there are Strings in Assoc Value mapping, the Assoc will be reduced to logical.
+
+=#
 function *(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A
@@ -43,3 +51,10 @@ function *(A::Assoc,B::Assoc)
 
     return condense(AB)
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

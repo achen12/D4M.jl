@@ -1,6 +1,8 @@
 import Base.print
 
-
+#=
+print : print Assoc in tabular form.
+=#
 function print(A::Assoc)
     output = full(A.A)
     if ! isa(A.val[1],Number)
@@ -15,3 +17,10 @@ function print(A::Assoc)
     output = hcat(vcat("0",A.row),output)
     dump(output)
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

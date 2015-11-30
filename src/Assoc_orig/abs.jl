@@ -9,3 +9,10 @@ function abs(A:Assoc)
     AT.A = abs(AT.A)
     return AT
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

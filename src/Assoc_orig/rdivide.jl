@@ -1,5 +1,9 @@
 import Base.(./)
 
+#=
+ ./ : Elementwise divide for Assoc
+=#
+
 function ./(A::Assoc,B::Assoc)
 #First, create the row and col of the intersection
 ABrow = intersect(A.row,B.row)
@@ -21,6 +25,11 @@ BB = round(Int64,BB)
 ABA = AA ./ BB
 ABA = sparse(ABA)
 return Assoc(ABrow,ABcol,promote([1.0],A.val)[1],ABA)
-
-
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

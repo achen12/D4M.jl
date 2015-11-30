@@ -1,5 +1,7 @@
 import Base.(==)
-
+#=
+== : get a new Assoc where all of the elements of input Assoc mataches the given Element.
+=#
 function ==(A::Assoc, E::Union{AbstractString,Number})
     tarIndex = searchsortedfirst(A.val,E)
     rowkey, colkey, valkey = findnz(A.A)
@@ -11,3 +13,10 @@ function ==(A::Assoc, E::Union{AbstractString,Number})
 end
 
 ==(E::Union{AbstractString,Number},A::Assoc) = (A == E)
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

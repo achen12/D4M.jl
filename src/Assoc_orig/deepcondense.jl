@@ -1,3 +1,7 @@
+
+#=
+deepCondense : remove empty mapping of row, column, and value, and return the condensed of the input Assoc.
+=#
 function deepCondense(A::Assoc)
     Anew = condense(A)
 
@@ -10,3 +14,11 @@ function deepCondense(A::Assoc)
     return Anew
     
 end
+
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

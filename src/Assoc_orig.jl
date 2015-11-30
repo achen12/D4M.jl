@@ -1,11 +1,19 @@
 import Base.isless
-isless(A::Int64,B::AbstractString) = false
-isless(A::AbstractString,B::Int64) = true
+
+#Allow sorting between Numbers and Strings
+isless(A::Number,B::AbstractString) = false
+isless(A::AbstractString,B::Number) = true
 
 
 StringOrNumArray = Union{AbstractString,Array,Number}
 
+#Creation of Assoc require StrUnique to split Single-Character-separated String Sequence.
 include("StrUnique.jl")
+
+#=
+Type Assoc (Associative Array)
+Support a 
+=#
 type Assoc
     row::Array{Union{AbstractString,Number}}
     col::Array{Union{AbstractString,Number}}
@@ -27,22 +35,17 @@ type Assoc
             return Assoc(x,x,x,spzeros(1,1));
             end
         if isa(rowIn,Number)
-            x = rowIn
-            rowIn = Array{Number}(1)
-            rowIn[1] = x
+            rowIn = Array{Union{AbstractString,Number},1}([rowIn])
         end
 
         if isa(colIn,Number)
-            x = colIn
-            colIn = Array{Number}(1)
-            colIn[1] = x
+
+            colIn = Array{Union{AbstractString,Number},1}([colIn])
         end
 
 
         if isa(valIn,Number)
-            x = valIn
-            valIn = Array{Number}(1)
-            valIn[1] = x
+            valIn = Array{Union{AbstractString,Number},1}([valIn])
         end
         i = rowIn;
         j = colIn;
@@ -76,14 +79,16 @@ type Assoc
             else
             val = unique(v)
             sort!(val)
-            k = 0
-            if val[1] == ""
-                k =-1
-            end
-            v = [searchsortedfirst(val,x)+ k  for x in v]
-            v = convert(AbstractArray{Int64},v)
-            if val[1] == ""
-                val = val[2:end]
+            if (isa(valIn[1],AbstractString))
+                k = 0
+                if val[1] == "" 
+                    k =-1
+                end
+                v = [searchsortedfirst(val,x)+ k  for x in v]
+                v = convert(AbstractArray{Int64},v)
+                if val[1] == ""
+                    val = val[2:end]
+                end
             end
            end 
 
@@ -130,6 +135,10 @@ type Assoc
     end
 
 
+
+#=
+Adding related operations for Assoc_orig
+=#
 include("./Assoc_orig/getindex.jl")
 include("./Assoc_orig/condense.jl")
 include("./Assoc_orig/no.jl")
@@ -148,3 +157,11 @@ include("./Assoc_orig/find.jl")
 include("./Assoc_orig/diag.jl")
 include("./Assoc_orig/plus.jl")
 include("./Assoc_orig/deepcondense.jl")
+
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

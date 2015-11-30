@@ -1,5 +1,5 @@
 function sortedintersect(A::Array, B::Array)
-    ABintersect = Array{typeof(A),1}
+    ABintersect = typeof(A)()
     temp_index_A = 1
     temp_index_B = 1
 
@@ -17,3 +17,10 @@ function sortedintersect(A::Array, B::Array)
 
     return ABintersect
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

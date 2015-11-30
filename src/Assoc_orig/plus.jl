@@ -1,4 +1,11 @@
 import Base.+
+
+#=
+ +,plus : matrix add for Assoc.
+
+ If Assoc has String in value mapping, the Assoc will be logical instead.
+=#
+
 +(A::Assoc,B::Assoc) = plus(A::Assoc,B::Assoc)
 function plus(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
@@ -11,21 +18,32 @@ function plus(A::Assoc,B::Assoc)
         Bt = logical(B)
     end
     ## A*B operation
-    ABrow = intersect(A.row,B.row)
-    ABcol = intersect(A.col,B.col)
+    ABrow = sortedunion(At.row,Bt.row)
+    ABcol = sortedunion(At.col,Bt.col)
     if (size(ABrow,1) == 0 || size(ABcol,1) == 0)
         return Assoc([1],[1],0,(+))
     end
 
-    ABA =  spzero(length(ABrow),length(ABcol))
-    Arow = [searchsortedfirst(ABrow,x) for x in A.row]
-    Acol = [searchsortedfirst(ABcol,x) for x in A.col]
-    Brow = [searchsortedfirst(ABrow,x) for x in B.row]
-    Bcol = [searchsortedfirst(ABcol,x) for x in B.col]
-    ABA[Arow,Acol] = A.A
-    ABA[Brow,Bcol] += B.A
-    AB = Assoc(ABrow,ABcol, promote([1.0],A.val)[1], ABA) 
+    ABA =  spzeros(length(ABrow),length(ABcol))
+    Arow = searchsortedmapping(At.row,ABrow)
+    #[searchsortedfirst(ABrow,x) for x in At.row]
+    Acol = searchsortedmapping(At.col,ABcol)
+    #[searchsortedfirst(ABcol,x) for x in At.col]
+    Brow = searchsortedmapping(Bt.row,ABrow)
+    #[searchsortedfirst(ABrow,x) for x in Bt.row]
+    Bcol = searchsortedmapping(Bt.col,ABcol)
+    #[searchsortedfirst(ABcol,x) for x in Bt.col]
+    ABA[Arow,Acol] += At.A
+    ABA[Brow,Bcol] += Bt.A
+    AB = Assoc(ABrow,ABcol, Array{Union{AbstractString,Number}}([1.0]), ABA) 
     ##Condense
     
     return condense(AB) 
 end
+
+########################################################
+# D4M: Dynamic Distributed Dimensional Data Model
+# Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
+# Software Engineer: Alexander Chen (alexc89@mit.edu)
+########################################################
+

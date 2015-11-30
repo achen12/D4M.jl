@@ -25,7 +25,7 @@ for i = 1:length(n)
     B = Assoc(ii,jj,1.0)
 
     tic()
-    C = plus(A,B)
+    C = A+B
     assoc_time[i] = toq()
     assoc_flops[i] = 2*sum(C)
     ii, jj, vv = find(C)
