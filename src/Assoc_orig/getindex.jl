@@ -9,7 +9,7 @@ function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
     return Assoc([1],[1],0,(+))
     end
 
-    return condense(Assoc(A.row[i],A.col[j],A.val,A.A[i,j]))
+    return deepcondense(Assoc(A.row[i],A.col[j],A.val,A.A[i,j]))
     end
 
 #Singular Case
