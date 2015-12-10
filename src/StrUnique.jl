@@ -24,12 +24,11 @@ function StrUnique(inputString::AbstractString, csv= false)
 
     uniqueSeq = unique(strA)
     sort!(uniqueSeq)
-    if uniqueSeq[1] == ""
+    if uniqueSeq[1] == "" #Handle Empty Case
         uniqueSeq = uniqueSeq[2:end]
     end
 
-
-    forwardMapping = [searchsortedfirst(uniqueSeq,x) for x in strA]
+    forwardMapping =[ searchsortedfirst(uniqueSeq,x) for x in strA]
 
     backwardMapping = zeros(1,length(forwardMapping))
 

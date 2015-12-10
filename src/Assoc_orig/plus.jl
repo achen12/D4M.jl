@@ -26,19 +26,14 @@ function plus(A::Assoc,B::Assoc)
 
     ABA =  spzeros(length(ABrow),length(ABcol))
     Arow = searchsortedmapping(At.row,ABrow)
-    #[searchsortedfirst(ABrow,x) for x in At.row]
     Acol = searchsortedmapping(At.col,ABcol)
-    #[searchsortedfirst(ABcol,x) for x in At.col]
     Brow = searchsortedmapping(Bt.row,ABrow)
-    #[searchsortedfirst(ABrow,x) for x in Bt.row]
     Bcol = searchsortedmapping(Bt.col,ABcol)
-    #[searchsortedfirst(ABcol,x) for x in Bt.col]
     ABA[Arow,Acol] += At.A
     ABA[Brow,Bcol] += Bt.A
     AB = Assoc(ABrow,ABcol, Array{Union{AbstractString,Number}}([1.0]), ABA) 
-    ##Condense
     
-    return condense(AB) 
+    return condense(AB) #Incase of negation
 end
 
 ########################################################
