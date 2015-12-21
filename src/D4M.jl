@@ -8,15 +8,15 @@ module D4M
     module_dir = Pkg.dir("D4M")
     pDB_dir = module_dir*"/examples/3Scaling/2ParallelDatabase"
     example_pDB01_DataTEST = () -> include( pDB_dir *"/pDB01_DataTEST.jl")
-    example_pDB02_DataTEST = () -> include( pDB_dir *"/pDB02_FileTEST.jl")
-    example_pDB03_DataTEST = () -> include( pDB_dir *"/pDB03_AssocTEST.jl")
-    example_pDB04_DataTEST = () -> include( pDB_dir *"/pDB04_DegreeTEST.jl")
+    example_pDB02_FileTEST = () -> include( pDB_dir *"/pDB02_FileTEST.jl")
+    example_pDB03_AssocTEST = () -> include( pDB_dir *"/pDB03_AssocTEST.jl")
+    example_pDB04_DegreeTEST = () -> include( pDB_dir *"/pDB04_DegreeTEST.jl")
 
     AI_dir = module_dir*"/examples/1Intro/1AssocIntro"
     example_AI1_SetupTEST = () -> include( AI_dir * "/AI1_SetupTEST.jl")
-    example_AI2_SetupTEST = () -> include( AI_dir * "/AI2_SubsrefTEST.jl")
-    example_AI3_SetupTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
-    example_AI4_SetupTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
+    example_AI2_SubsrefTEST = () -> include( AI_dir * "/AI2_SubsrefTEST.jl")
+    example_AI3_MathTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
+    example_AI4_AdvConstructTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
 
     MP_dir = module_dir*"/examples/3Scaling/3MatrixPerformance"
     example_MP1_DenseTEST = () -> include( MP_dir * "/MP1_DenseTEST.jl")
@@ -32,9 +32,12 @@ include("WriteCSV.jl") #load Assoc from CSV file
 include("ReadCSV.jl") #Dump Assoc into a CSV file
 include("OutDegree.jl") #Calculate OutDegree
 include("NumStr.jl") #Quickly calculate the length of string sequence separated by single-character
+include("CatKeyMul.jl") #CatKeyMultiply
+include("CatValMul.jl") #CatValMultiply
 
 #Operation that gain performance benefit on sorted inputs
 include("sortedintersect.jl")
+include("sortedintersectmapping.jl")
 include("sortedunion.jl")
 include("searchsortedmapping.jl")
 

@@ -21,14 +21,26 @@ function *(A::Assoc,B::Assoc)
     #Improve intersect with unique sorted sets
     ABintersect = sortedintersect(At.col,Bt.row)
     
-    if (size(ABintersect,1) == 0)
-        return Assoc([1],[1],0,(+))
-    end
+#    if (size(ABintersect,1) == 0)
+#        return Assoc([1],[1],0,(+))
+#    end
     
-    AintMap = searchsortedmapping(ABintersect,At.col) 
-    BintMap = searchsortedmapping(ABintersect,Bt.row) 
+#    AintMap = searchsortedmapping(ABintersect,At.col) 
+#    BintMap = searchsortedmapping(ABintersect,Bt.row) 
 
-    ABA = At.A[:,AintMap]*Bt.A[BintMap,:]
+    Aref = @spawn searchsortedmapping(ABintersect,At.col)
+    Bref = @spawn searchsortedmapping(ABintersect,Bt.row)
+    AintMap = fetch(Aref)
+    BintMap = fetch(Bref)
+#    AintMap, BintMap = sortedintersectmapping(At.col,Bt.row)
+
+#    AintMap,BintMap = map(x -> searchsortedmapping(x[1],x[2]),[(ABintersect,At.col) (ABintersect, Bt.row)])
+    Aref = @spawn At.A[:,AintMap]
+    Bref = @spawn Bt.A[BintMap,:]
+    AA = fetch(Aref)
+    BB = fetch(Bref)
+
+    ABA = AA*BB
 
     AB = Assoc(At.row,Bt.col,Array{Union{AbstractString,Number}}([1.0]),ABA)
 
