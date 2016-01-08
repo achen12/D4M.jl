@@ -62,7 +62,42 @@ PreviousTypes = Union{PreviousTypes,AbstractString}
 #Variations by Regex
 getindex(A::Assoc, i::Regex, j::PreviousTypes)  = getindex(A, find( x -> ismatch(i,x),A.row), j)
 getindex(A::Assoc, i::PreviousTypes, j::Regex)  = getindex(A, i, find( x -> ismatch(j,x),A.col))
-getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch(i,x),A.row), find( x -> ismatch(j,x),A.col)
+getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch(i,x),A.row), find( x -> ismatch(j,x),A.col))
+
+
+PreviousTypes = Union{PreviousTypes,Regex}
+
+
+#Variation with StartWith
+type StartWith
+    inputString::AbstractString
+end
+
+function StartWithHelper(Ar::Array{Union{AbstractString,Number}},S::StartWith)
+    str_list = []
+    if S.inputString[end] == ','
+        str_list,~ = StrUnique(S.inputString)
+    else
+        str_list = [S.inputString]
+    end
+    result_indice = Array{Int64,1}()
+    for str in str_list
+        str_result_first = searchsortedfirst(Ar,str)
+        str_result_last = searchsortedlast(Ar,str*string(Char(255)))
+        if str_result_first <= str_result_last
+            [push!(result_indice,x) for x in str_result_first:str_result_last]
+        end
+    end
+    return result_indice
+end
+
+getindex(A::Assoc,i::PreviousTypes,j::StartWith) = getindex(A,i,StartWithHelper(Col(A),j))
+
+getindex(A::Assoc,i::StartWith,j::PreviousTypes) = getindex(A,StartWithHelper(Row(A),i),j)
+
+getindex(A::Assoc,i::StartWith,j::StartWith) = getindex(A,StartWithHelper(Row(A),i),StartWithHelper(Col(A),j))
+
+PreviousTypes = Union{PreviousTypes,StartWith}
 
 
 ########################################################
@@ -70,4 +105,3 @@ getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch
 # Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
 # Software Engineer: Alexander Chen (alexc89@mit.edu)
 ########################################################
-)

@@ -31,6 +31,6 @@ for i = 1:length(n)
     assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     assoc_gflops[i] = assoc_flops[i] ./ assoc_time[i] ./ 1e9
     print("Time: ", assoc_time[i])
-    print("GFlops: ", assoc_gflops[i])
-    println("GBytes: ", assoc_gbytes[i])
+    print(", GFlops: ", assoc_gflops[i])
+    println(", GBytes: ", assoc_gbytes[i])
 end

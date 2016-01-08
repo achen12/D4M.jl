@@ -28,9 +28,9 @@ for i = 1:length(n)
     sparse_flops[i] = 2*sum(C)
     sparse_gflops[i] = sparse_flops[i] ./ sparse_time[i] ./ 1e9
 
-    println("Time: ", string(sparse_time[i]))
-    println("GFlops: ", string(sparse_gflops[i]))
-    println("GBytes: ", string(sparse_gbytes[i]))
+    print("Time: ", string(sparse_time[i]))
+    print(", GFlops: ", string(sparse_gflops[i]))
+    println(", GBytes: ", string(sparse_gbytes[i]))
 
 end
 #Plot

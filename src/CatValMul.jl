@@ -4,7 +4,7 @@ function CatValMul(A::Assoc,B::Assoc)
         A = A[:,AB]
         B = B[AB,:]
         rrr,ccc,vvv = findnz(Adj(A*B))
-        ABVal = Array{Union{AbstractString,Number},1}()
+        ABVal = Array(Union{AbstractString,Number},length(rrr))
         for i in 1:length(rrr)
             r = rrr[i]
             c = ccc[i]
@@ -18,7 +18,7 @@ function CatValMul(A::Assoc,B::Assoc)
             end
             if length(ABValList) > 0
                 val = join(ABValList,";")*";"
-                push!(ABVal,val)
+                ABVal[i] = val
             end
         end
         return Assoc(Row(A)[rrr],Col(B)[ccc],ABVal)

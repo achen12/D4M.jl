@@ -21,9 +21,9 @@ for i = 1:length(n)
 
     dense_gflops[i] = dense_flops[i] ./ dense_time[i] ./ 1e9
 
-    println("Time: ", string(dense_time[i],))
-    println("GFlops: ", string(dense_gflops[i]))
-    println("GBytes: ", string(dense_gbytes[i]))
+    print("Time: ", string(dense_time[i],))
+    print(", GFlops: ", string(dense_gflops[i]))
+    println(", GBytes: ", string(dense_gbytes[i]))
 
 end
 

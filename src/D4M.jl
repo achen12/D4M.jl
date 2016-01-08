@@ -18,6 +18,11 @@ module D4M
     example_AI3_MathTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
     example_AI4_AdvConstructTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
 
+    EA_dir = module_dir*"/examples/1Intro/2EdgeArt"
+    example_EA1_GraphTEST = () -> include( EA_dir * "/EA1_GraphTEST.jl")
+    example_EA2_SubsrefTEST = () -> include( EA_dir * "/EA2_SubsrefTEST.jl")
+    example_EA3_SubGraphTEST = () -> include( EA_dir * "/EA3_SubGraphTEST.jl")
+    
     MP_dir = module_dir*"/examples/3Scaling/3MatrixPerformance"
     example_MP1_DenseTEST = () -> include( MP_dir * "/MP1_DenseTEST.jl")
     example_MP2_SparseTEST = () -> include( MP_dir * "/MP2_SparseTEST.jl")

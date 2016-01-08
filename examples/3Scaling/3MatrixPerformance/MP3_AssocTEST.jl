@@ -29,7 +29,7 @@ for i = 1:length(n)
     ii, jj, vv = find(C)
     assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     assoc_gflops[i] = assoc_flops[i] ./ assoc_time[i] ./ 1e9
-    println("Time: ", assoc_time[i])
-    println("GFlops: ", assoc_gflops[i])
-    println("GBytes: ", assoc_gbytes[i])
+    print("Time: ", assoc_time[i])
+    print(", GFlops: ", assoc_gflops[i])
+    println(", GBytes: ", assoc_gbytes[i])
 end
