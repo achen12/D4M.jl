@@ -9,7 +9,7 @@ function sqIn(A::Assoc)
         AtA = logical(A)
     end
 
-    AA = adj(AtA)
+    AA = Adj(AtA)
     AAtAA = AA' * AA;
 
     AtA.A = AAtAA;

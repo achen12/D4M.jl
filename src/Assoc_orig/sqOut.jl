@@ -3,7 +3,7 @@ function sqOut(A::Assoc)
     if ! isa(A.val[1], Number)
         AtA = logical(A)
     end
-    AA = adj(AtA)
+    AA = Adj(AtA)
     AAtAA = AA * AA';
     AtA.A = AAtAA;
     AtA.col = AtA.row
