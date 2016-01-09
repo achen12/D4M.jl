@@ -1,4 +1,4 @@
-r = Pkg.dir("D4M") * "/examples/1Intro/2EdgeArt/Edge.csv"
+csv_dir = Pkg.dir("D4M") * "/examples/1Intro/2EdgeArt/Edge.csv"
 print(csv_dir)
 
 E = ReadCSV(csv_dir);                       # Read CSV file into associative array.
