@@ -1,5 +1,7 @@
+r = Pkg.dir("D4M") * "/examples/1Intro/2EdgeArt/Edge.csv"
+print(csv_dir)
 
-E = ReadCSV("Edge.csv");                       # Read CSV file into associative array.
+E = ReadCSV(csv_dir);                       # Read CSV file into associative array.
 print(E);                                # Show in tabular form.
 
 Eo = E[(E[:,"Color,"] == "Orange," ).row,:];   # Get orange edges.
