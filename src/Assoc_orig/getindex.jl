@@ -68,12 +68,12 @@ getindex(A::Assoc, i::Regex, j::Regex)          = getindex(A, find( x -> ismatch
 PreviousTypes = Union{PreviousTypes,Regex}
 
 
-#Variation with StartWith
-type StartWith
+#Variation with StartsWith
+type StartsWith
     inputString::AbstractString
 end
 
-function StartWithHelper(Ar::Array{Union{AbstractString,Number}},S::StartWith)
+function StartsWithHelper(Ar::Array{Union{AbstractString,Number}},S::StartsWith)
     str_list = []
     if S.inputString[end] == ','
         str_list,~ = StrUnique(S.inputString)
@@ -91,13 +91,13 @@ function StartWithHelper(Ar::Array{Union{AbstractString,Number}},S::StartWith)
     return result_indice
 end
 
-getindex(A::Assoc,i::PreviousTypes,j::StartWith) = getindex(A,i,StartWithHelper(Col(A),j))
+getindex(A::Assoc,i::PreviousTypes,j::StartsWith) = getindex(A,i,StartsWithHelper(Col(A),j))
 
-getindex(A::Assoc,i::StartWith,j::PreviousTypes) = getindex(A,StartWithHelper(Row(A),i),j)
+getindex(A::Assoc,i::StartsWith,j::PreviousTypes) = getindex(A,StartsWithHelper(Row(A),i),j)
 
-getindex(A::Assoc,i::StartWith,j::StartWith) = getindex(A,StartWithHelper(Row(A),i),StartWithHelper(Col(A),j))
+getindex(A::Assoc,i::StartsWith,j::StartsWith) = getindex(A,StartsWithHelper(Row(A),i),StartsWithHelper(Col(A),j))
 
-PreviousTypes = Union{PreviousTypes,StartWith}
+PreviousTypes = Union{PreviousTypes,StartsWith}
 
 
 ########################################################
