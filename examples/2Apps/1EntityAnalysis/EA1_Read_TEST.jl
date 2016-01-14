@@ -8,7 +8,7 @@ print(E[1:5,:]);
 ~,~,position_val = find(E[:,"position,"]);
 ~,~,type_val     = find(E[:,"type,"]);
 
-typeEntity_val = CatStr(type_val, "/" , entity_val);  ##TODO
+typeEntity_val = CatStr(type_val, "/" , entity_val); 
 
 E = Assoc(doc_val,typeEntity_val,position_val);
 
