@@ -157,6 +157,8 @@ include("./Assoc_orig/find.jl")
 include("./Assoc_orig/diag.jl")
 include("./Assoc_orig/plus.jl")
 include("./Assoc_orig/deepcondense.jl")
+include("./Assoc_orig/lt.jl")
+include("./Assoc_orig/gt.jl")
 
 
 ########################################################
