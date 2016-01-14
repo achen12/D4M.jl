@@ -39,6 +39,7 @@ include("OutDegree.jl") #Calculate OutDegree
 include("NumStr.jl") #Quickly calculate the length of string sequence separated by single-character
 include("CatKeyMul.jl") #CatKeyMultiply
 include("CatValMul.jl") #CatValMultiply
+include("CatStr.jl")    #Cat String
 
 #Operation that gain performance benefit on sorted inputs
 include("sortedintersect.jl")
