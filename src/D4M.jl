@@ -40,6 +40,8 @@ include("NumStr.jl") #Quickly calculate the length of string sequence separated 
 include("CatKeyMul.jl") #CatKeyMultiply
 include("CatValMul.jl") #CatValMultiply
 include("CatStr.jl")    #Cat String
+include("SplitStr.jl")
+include("col2type.jl")
 
 #Operation that gain performance benefit on sorted inputs
 include("sortedintersect.jl")

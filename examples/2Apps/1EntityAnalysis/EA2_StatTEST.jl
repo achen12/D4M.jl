@@ -1,8 +1,6 @@
 load #TODO Load
 
-
-
-sum(logical(col2type(E,"/")),1)  #TODO col2type
+sum(logical(col2type(E,"/")),1) 
 
 En = sum(logical(E),1)
 
