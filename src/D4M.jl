@@ -6,28 +6,37 @@ module D4M
         Loaded Example
     =#
     module_dir = Pkg.dir("D4M")
-    pDB_dir = module_dir*"/examples/3Scaling/2ParallelDatabase"
-    example_pDB01_DataTEST = () -> include( pDB_dir *"/pDB01_DataTEST.jl")
-    example_pDB02_FileTEST = () -> include( pDB_dir *"/pDB02_FileTEST.jl")
-    example_pDB03_AssocTEST = () -> include( pDB_dir *"/pDB03_AssocTEST.jl")
-    example_pDB04_DegreeTEST = () -> include( pDB_dir *"/pDB04_DegreeTEST.jl")
+    ParallelDatabase_dir = module_dir*"/examples/3Scaling/2ParallelDatabase"
+    example_3Scaling_2ParallelDatabase_pDB01_DataTEST = () -> include( ParallelDatabase_dir *"/pDB01_DataTEST.jl")
+    example_3Scaling_2ParallelDatabase_pDB02_FileTEST = () -> include( ParallelDatabase_dir *"/pDB02_FileTEST.jl")
+    example_3Scaling_2ParallelDatabase_pDB03_AssocTEST = () -> include( ParallelDatabase_dir *"/pDB03_AssocTEST.jl")
+    example_3Scaling_2ParallelDatabase__pDB04_DegreeTEST = () -> include( ParallelDatabase_dir *"/pDB04_DegreeTEST.jl")
 
-    AI_dir = module_dir*"/examples/1Intro/1AssocIntro"
-    example_AI1_SetupTEST = () -> include( AI_dir * "/AI1_SetupTEST.jl")
-    example_AI2_SubsrefTEST = () -> include( AI_dir * "/AI2_SubsrefTEST.jl")
-    example_AI3_MathTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
-    example_AI4_AdvConstructTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
+    AssocIntro_dir = module_dir*"/examples/1Intro/1AssocIntro"
+    example_1Intro_1AssocIntro_AI1_SetupTEST = () -> include( AI_dir * "/AI1_SetupTEST.jl")
+    example_1Intro_1AssocIntro_AI2_SubsrefTEST = () -> include( AI_dir * "/AI2_SubsrefTEST.jl")
+    example_1Intro_1AssocIntro_AI3_MathTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
+    example_1Intro_1AssocIntro_AI4_AdvConstructTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
 
-    EA_dir = module_dir*"/examples/1Intro/2EdgeArt"
-    example_EA1_GraphTEST = () -> include( EA_dir * "/EA1_GraphTEST.jl")
-    example_EA2_SubsrefTEST = () -> include( EA_dir * "/EA2_SubsrefTEST.jl")
-    example_EA3_SubGraphTEST = () -> include( EA_dir * "/EA3_SubGraphTEST.jl")
+    EdgeArt_dir = module_dir*"/examples/1Intro/2EdgeArt"
+    example_1Intro_2EdgeArt_EA1_GraphTEST = () -> include( EdgeArt_dir * "/EA1_GraphTEST.jl")
+    example_1Intro_2EdgeArt_EA2_SubsrefTEST = () -> include( EdgeArt_dir * "/EA2_SubsrefTEST.jl")
+    example_1Intro_2EdgeArt_EA3_SubGraphTEST = () -> include( EdgeArt_dir * "/EA3_SubGraphTEST.jl")
     
-    MP_dir = module_dir*"/examples/3Scaling/3MatrixPerformance"
-    example_MP1_DenseTEST = () -> include( MP_dir * "/MP1_DenseTEST.jl")
-    example_MP2_SparseTEST = () -> include( MP_dir * "/MP2_SparseTEST.jl")
-    example_MP3_AssocTEST = () -> include( MP_dir * "/MP3_AssocTEST.jl")
-    example_MP6_AssocPlusTEST = () -> include( MP_dir * "/MP6_AssocPlusTEST.jl")
+    EntityAnalysis_dir = module_dir*"/examples/2Apps/1EntityAnalysis"
+    example_2Apps_1EntityAnalysis_EA1_GraphTEST = () -> include( EntityAnalysis_dir * "/EA1_ReadTEST.jl")
+    example_2Apps_1EntityAnalysis_EA2_SubsrefTEST = () -> include( EntityAnalysis_dir * "/EA2_StatTEST.jl")
+    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA3_FacetTEST.jl")
+    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA4_GraphTEST.jl")
+    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA5_GraphQueryTEST.jl")
+
+    MatrixPerformance_dir = module_dir*"/examples/3Scaling/3MatrixPerformance"
+    example_3Scaling_3MatrixPerformance_MP1_DenseTEST = () -> include( MatrixPerformance_dir * "/MP1_DenseTEST.jl")
+    example_3Scaling_3MatrixPerformance_MP2_SparseTEST = () -> include( MatrixPerformance_dir * "/MP2_SparseTEST.jl")
+    example_3Scaling_3MatrixPerformance_MP3_AssocTEST = () -> include( MatrixPerformance_dir * "/MP3_AssocTEST.jl")
+    example_3Scaling_3MatrixPerformance_MP4_AssocCatKeyTEST = () -> include( MatrixPerformance_dir * "/MP4_AssocCatKeyTEST.jl")
+    example_3Scaling_3MatrixPerformance_MP5_AssocCatValKeyTEST = () -> include( MatrixPerformance_dir * "/MP5_AssocCatValKeyTEST.jl")
+    example_3Scaling_3MatrixPerformance_MP6_AssocPlusTEST = () -> include( MatrixPerformance_dir * "/MP6_AssocPlusTEST.jl")
 
 end
 
