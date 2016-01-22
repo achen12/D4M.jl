@@ -1,11 +1,13 @@
-load #TODO Load
+file_dir = Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/typeEntity.csv";
 
-sum(logical(col2type(E,"/")),1) 
+#E = ReadCSV(file_dir); #TODO save/load problem, Rapid load and reload in Julia?
+sum(logical(col2type(E,"/")),1);
 
-En = sum(logical(E),1)
+En = sum(logical(E),1);
 
-~,entity,count = find(En)
+~,entity,count = find(En);
 
-An = Assoc(count,entity,1)
+An = Assoc(count,entity,1);
 
-loglog(full(sum(Adj(An[:,StartsWith("LOCATION/,")]),2)) ,"o"); #TODO plot with loglog
+using PyPlot
+loglog(full(sum(Adj(An[:,StartsWith("LOCATION/,")]),2)) ,"o"); 

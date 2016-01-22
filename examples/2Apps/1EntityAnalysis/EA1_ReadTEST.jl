@@ -17,7 +17,6 @@ WriteCSV(E,Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/typeEntity.csv");
 
 print(E[1,:]);
 
-print(E);
 
 using PyPlot 
-spy(E'); #TODO use pyplot.
+spy(E');

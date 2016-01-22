@@ -26,9 +26,9 @@ module D4M
     EntityAnalysis_dir = module_dir*"/examples/2Apps/1EntityAnalysis"
     example_2Apps_1EntityAnalysis_EA1_GraphTEST = () -> include( EntityAnalysis_dir * "/EA1_ReadTEST.jl")
     example_2Apps_1EntityAnalysis_EA2_SubsrefTEST = () -> include( EntityAnalysis_dir * "/EA2_StatTEST.jl")
-    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA3_FacetTEST.jl")
-    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA4_GraphTEST.jl")
-    example_2Apps_1EntityAnalysis_EA3_SubGraphTEST = () -> include( EntityAnalysis_dir * "/EA5_GraphQueryTEST.jl")
+    example_2Apps_1EntityAnalysis_EA3_FacetTEST = () -> include( EntityAnalysis_dir * "/EA3_FacetTEST.jl")
+    example_2Apps_1EntityAnalysis_EA4_GraphTEST = () -> include( EntityAnalysis_dir * "/EA4_GraphTEST.jl")
+    example_2Apps_1EntityAnalysis_EA5_GraphQueryTEST = () -> include( EntityAnalysis_dir * "/EA5_GraphQueryTEST.jl")
 
     MatrixPerformance_dir = module_dir*"/examples/3Scaling/3MatrixPerformance"
     example_3Scaling_3MatrixPerformance_MP1_DenseTEST = () -> include( MatrixPerformance_dir * "/MP1_DenseTEST.jl")

@@ -4,12 +4,15 @@ import Base.(==)
 =#
 function ==(A::Assoc, E::Union{AbstractString,Number})
     tarIndex = searchsortedfirst(A.val,E)
+    if (isa(E,Number) & (size(Val(A),1)==1) & (Val(A)[1] == 1.0)  ) 
+        tarIndex = E
+    end
     rowkey, colkey, valkey = findnz(A.A)
     mapping = find( x-> x == tarIndex, valkey)
-    rowkey , colkey = unique(rowkey[mapping]), unique(colkey[mapping])
-    sort!(rowkey)
-    sort!(colkey)
-    return A[rowkey,colkey]
+#    rowkey , colkey = unique(rowkey[mapping]), unique(colkey[mapping])
+#    sort!(rowkey)
+#    sort!(colkey)
+    return A[rowkey[mapping],colkey[mapping]]
 end
 
 ==(E::Union{AbstractString,Number},A::Assoc) = (A == E)

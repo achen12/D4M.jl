@@ -1,5 +1,5 @@
 import Base.isless
-
+import PyPlot
 #Allow sorting between Numbers and Strings
 isless(A::Number,B::AbstractString) = false
 isless(A::AbstractString,B::Number) = true
@@ -159,7 +159,7 @@ include("./Assoc_orig/plus.jl")
 include("./Assoc_orig/deepcondense.jl")
 include("./Assoc_orig/lt.jl")
 include("./Assoc_orig/gt.jl")
-
+include("./Assoc_orig/spy.jl")
 
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model
