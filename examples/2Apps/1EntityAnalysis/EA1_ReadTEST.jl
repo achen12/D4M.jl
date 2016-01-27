@@ -1,4 +1,5 @@
 
+
 file_dir = Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/Entity.csv";
 E = ReadCSV(file_dir);
 print(E[1:5,:]);
@@ -12,7 +13,8 @@ typeEntity_val = CatStr(type_val, "/" , entity_val);
 
 E = Assoc(doc_val,typeEntity_val,position_val);
 
-WriteCSV(E,Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/typeEntity.csv");
+using JLD
+save(Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/Entity.jld" , "E",E );
 
 
 print(E[1,:]);

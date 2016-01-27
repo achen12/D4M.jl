@@ -1,6 +1,9 @@
-file_dir = Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/typeEntity.csv";
+file_dir = Pkg.dir("D4M")*"/examples/2Apps/1EntityAnalysis/Entity.jld";
 
-#E = ReadCSV(file_dir); #TODO save/load problem, Rapid load and reload in Julia?
+using JLD
+
+E = load(file_dir)["E"]
+
 sum(logical(col2type(E,"/")),1);
 
 En = sum(logical(E),1);

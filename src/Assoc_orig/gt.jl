@@ -7,12 +7,7 @@ function >(A::Assoc, E::Union{AbstractString,Number})
     if !(E == Val(A)[tarIndex])
         tarIndex = tarIndex-1
         
-        println("Hello?")
     end
-    println(tarIndex)
-    println("Ping?")
-    println(isa(E,Number))
-    println(A.val == [1.0])
     if (isa(E,Number) & (A.val ==[1.0])  )
         print("Hello!")
         tarIndex = E

@@ -14,6 +14,8 @@ include("StrUnique.jl")
 Type Assoc (Associative Array)
 Support a 
 =#
+
+
 type Assoc
     row::Array{Union{AbstractString,Number}}
     col::Array{Union{AbstractString,Number}}
@@ -135,7 +137,6 @@ type Assoc
     end
 
 
-
 #=
 Adding related operations for Assoc_orig
 =#
@@ -160,6 +161,7 @@ include("./Assoc_orig/deepcondense.jl")
 include("./Assoc_orig/lt.jl")
 include("./Assoc_orig/gt.jl")
 include("./Assoc_orig/spy.jl")
+include("./Assoc_orig/jld.jl")
 
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model
