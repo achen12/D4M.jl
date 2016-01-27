@@ -1,20 +1,15 @@
-import Base.+
+import Base.-
 
-#=
- +,plus : matrix add for Assoc.
 
- If Assoc has String in value mapping, the Assoc will be logical instead.
-=#
-
-+(A::Assoc,B::Assoc) = plus(A::Assoc,B::Assoc)
-function plus(A::Assoc,B::Assoc)
+-(A::Assoc,B::Assoc) = minus(A::Assoc,B::Assoc)
+function minus(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A
     Bt = B
     if(A.val != [1.0])
         At = logical(A)
     end
-    if(A.val != [1.0])
+    if(B.val !=[1.0])
         Bt = logical(B)
     end
     ## A*B operation
@@ -30,7 +25,7 @@ function plus(A::Assoc,B::Assoc)
     Brow = searchsortedmapping(Bt.row,ABrow)
     Bcol = searchsortedmapping(Bt.col,ABcol)
     ABA[Arow,Acol] += At.A
-    ABA[Brow,Bcol] += Bt.A
+    ABA[Brow,Bcol] -= Bt.A
     AB = Assoc(ABrow,ABcol, Array{Union{AbstractString,Number}}([1.0]), ABA) 
     
     return condense(AB) #Incase of negation

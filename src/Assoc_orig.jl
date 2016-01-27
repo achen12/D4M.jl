@@ -162,6 +162,7 @@ include("./Assoc_orig/lt.jl")
 include("./Assoc_orig/gt.jl")
 include("./Assoc_orig/spy.jl")
 include("./Assoc_orig/jld.jl")
+include("./Assoc_orig/put.jl")
 
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model
