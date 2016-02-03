@@ -13,10 +13,10 @@ module D4M
     example_3Scaling_2ParallelDatabase__pDB04_DegreeTEST = () -> include( ParallelDatabase_dir *"/pDB04_DegreeTEST.jl")
 
     AssocIntro_dir = module_dir*"/examples/1Intro/1AssocIntro"
-    example_1Intro_1AssocIntro_AI1_SetupTEST = () -> include( AI_dir * "/AI1_SetupTEST.jl")
-    example_1Intro_1AssocIntro_AI2_SubsrefTEST = () -> include( AI_dir * "/AI2_SubsrefTEST.jl")
-    example_1Intro_1AssocIntro_AI3_MathTEST = () -> include( AI_dir * "/AI3_MathTEST.jl")
-    example_1Intro_1AssocIntro_AI4_AdvConstructTEST = () -> include( AI_dir * "/AI4_AdvConstructTEST.jl")
+    example_1Intro_1AssocIntro_AI1_SetupTEST = () -> include( AssocIntro_dir * "/AI1_SetupTEST.jl")
+    example_1Intro_1AssocIntro_AI2_SubsrefTEST = () -> include( AssocIntro_dir * "/AI2_SubsrefTEST.jl")
+    example_1Intro_1AssocIntro_AI3_MathTEST = () -> include( AssocIntro_dir * "/AI3_MathTEST.jl")
+    example_1Intro_1AssocIntro_AI4_AdvConstructTEST = () -> include( AssocIntro_dir * "/AI4_AdvConstructTEST.jl")
 
     EdgeArt_dir = module_dir*"/examples/1Intro/2EdgeArt"
     example_1Intro_2EdgeArt_EA1_GraphTEST = () -> include( EdgeArt_dir * "/EA1_GraphTEST.jl")
