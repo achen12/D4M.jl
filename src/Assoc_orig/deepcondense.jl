@@ -4,13 +4,18 @@ deepCondense : remove empty mapping of row, column, and value, and return the co
 =#
 function deepCondense(A::Assoc)
     Anew = condense(A)
-    row,col,val = findnz(A.A)
+    row,col,val = findnz(Anew.A)
     uniVal = sort!(unique(val))
     val = Array{Int64,1}(pmap(x -> searchsortedfirst(uniVal,x), val))
-    uniVal = pmap(x -> A.val[x],uniVal)
-
+    #At this point val is the mapping to uniVal
     Anew.A = sparse(row,col,val)
-    Anew.val = uniVal
+
+    if A.val == [1.0] #Checking if the A.val mapping needs to be done.
+        Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
+    else
+        uniVal = pmap(x -> A.newval[x],uniVal)
+        Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
+    end
     return Anew
     
 end

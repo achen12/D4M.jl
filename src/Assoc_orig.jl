@@ -1,5 +1,5 @@
 import Base.isless
-
+import PyPlot
 #Allow sorting between Numbers and Strings
 isless(A::Number,B::AbstractString) = false
 isless(A::AbstractString,B::Number) = true
@@ -14,6 +14,8 @@ include("StrUnique.jl")
 Type Assoc (Associative Array)
 Support a 
 =#
+
+
 type Assoc
     row::Array{Union{AbstractString,Number}}
     col::Array{Union{AbstractString,Number}}
@@ -135,7 +137,6 @@ type Assoc
     end
 
 
-
 #=
 Adding related operations for Assoc_orig
 =#
@@ -157,8 +158,12 @@ include("./Assoc_orig/find.jl")
 include("./Assoc_orig/diag.jl")
 include("./Assoc_orig/plus.jl")
 include("./Assoc_orig/deepcondense.jl")
-
-
+include("./Assoc_orig/lt.jl")
+include("./Assoc_orig/gt.jl")
+include("./Assoc_orig/spy.jl")
+include("./Assoc_orig/jld.jl")
+include("./Assoc_orig/put.jl")
+include("./Assoc_orig/full.jl")
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model
 # Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)
