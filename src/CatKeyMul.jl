@@ -4,6 +4,7 @@ function CatKeyMul(A::Assoc,B::Assoc)
         A = A[:,AB]
         B = B[AB,:]
         AB = A*B
+        rrr,ccc,~ = findnz(Adj(AB))
         ABVal = Array(Union{AbstractString,Number},length(rrr))
         AA = Adj(A)
         BA = Adj(B)
@@ -11,11 +12,15 @@ function CatKeyMul(A::Assoc,B::Assoc)
         RowB = Row(B)
         RowA = Row(A)
         ColB = Col(B)
-        ColB2Rows = [ BA[:,i].rowval for i = 1:BA.n]
+        c = 1
+        ColB2Rows =  BA[:,c].rowval
         for i in 1:length(rrr)
             r = rrr[i]
-            c = ccc[i]
-            ABvalList = sortedintersect(RowA2Cols[r],ColB2Rows[c])
+            if(c != ccc[i])
+                c = ccc[i]
+                ColB2Rows =  BA[:,c].rowval
+            end
+            ABvalList = sortedintersect(RowA2Cols[r],ColB2Rows)
             if length(ABvalList) > 0
                 val = join(RowB[ABvalList],";")*";"
                 ABVal[i] = val
