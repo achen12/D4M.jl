@@ -1,20 +1,28 @@
 function CatKeyMul(A::Assoc,B::Assoc)
-    if isa(Col(A)[1],String) && isa(Row(B)[1],String)
-        AB = sortedintersect(A.col,B.row)
+    if isa(Col(A)[1],AbstractString) && isa(Row(B)[1],AbstractString)
+        AB = sortedintersect(Col(A),Row(B))
         A = A[:,AB]
         B = B[AB,:]
-        rrr,ccc,vvv = findnz(Adj(A*B))
+        AB = A*B
         ABVal = Array(Union{AbstractString,Number},length(rrr))
+        AA = Adj(A)
+        BA = Adj(B)
+        RowA2Cols = [ AA[i,:]'.rowval for i = 1:AA.m]
+        RowB = Row(B)
+        RowA = Row(A)
+        ColB = Col(B)
+        ColB2Rows = [ BA[:,i].rowval for i = 1:BA.n]
         for i in 1:length(rrr)
             r = rrr[i]
             c = ccc[i]
-            ABvalList = sortedintersect(Col(A[r,:]),Row(B[:,c]))
+            ABvalList = sortedintersect(RowA2Cols[r],ColB2Rows[c])
             if length(ABvalList) > 0
-                val = join(ABvalList,";")*";"
+                val = join(RowB[ABvalList],";")*";"
                 ABVal[i] = val
             end
         end
-        return Assoc(Row(A)[rrr],Col(B)[ccc],ABVal)
+        AB.val = ABVal
+        return AB
     else
         return A*B
     end

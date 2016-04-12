@@ -25,7 +25,7 @@ for i = 1:length(n)
     tic()
     C = A*B
     assoc_time[i] = toq()
-    assoc_flops[i] = 2*sum(C)
+    assoc_flops[i] = 2*sum(sum(Adj(C)))
     ii, jj, vv = find(C)
     assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     assoc_gflops[i] = assoc_flops[i] ./ assoc_time[i] ./ 1e9

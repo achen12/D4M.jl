@@ -46,7 +46,7 @@ include("WriteCSV.jl") #load Assoc from CSV file
 include("ReadCSV.jl") #Dump Assoc into a CSV file
 include("OutDegree.jl") #Calculate OutDegree
 include("NumStr.jl") #Quickly calculate the length of string sequence separated by single-character
-include("CatKeyMul.jl") #CatKeyMultiply
+#include("CatKeyMul.jl") #CatKeyMultiply
 include("CatValMul.jl") #CatValMultiply
 include("CatStr.jl")    #Cat String
 include("SplitStr.jl")

@@ -13,7 +13,7 @@ function deepCondense(A::Assoc)
     if A.val == [1.0] #Checking if the A.val mapping needs to be done.
         Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
     else
-        uniVal = pmap(x -> A.newval[x],uniVal)
+        uniVal = map(x -> Anew.val[x],uniVal)
         Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
     end
     return Anew
