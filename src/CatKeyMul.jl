@@ -1,6 +1,11 @@
 function CatKeyMul(A::Assoc,B::Assoc)
     if isa(Col(A)[1],AbstractString) && isa(Row(B)[1],AbstractString)
 
+##Target = Tousandth GFlops performance
+
+
+
+    #= Approach #2 Ten-thousandth GFlops performance
         AB = logical(A)*logical(B);
         A1 = A[Row(AB),:];  B1 = B[:,Col(AB)];
         A2 = A1[:,Row(B1)]; B2 = B1[Col(A1),:];
@@ -13,29 +18,38 @@ function CatKeyMul(A::Assoc,B::Assoc)
         
         rrr,ccc,~ = findnz(Adj(AB))
         v = Array{Array{Union{AbstractString,Number},1},1}()
-        vvv = Array(Union{AbstractString,Number}, length(rrr))
+#        vvv = Array(Union{AbstractString,Number}, length(rrr))
+        vvv = Array{Union{AbstractString,Number},1}()
         RowB = Row(B)
+        currIndex = 0;
         for i = 1:B2size[2]
             potentialvv, ~, ~  = findnz(B2adj[:,i])
             X = A2adj[:,potentialvv] #reduce to just the potential for this column from B
-            rr = X.rowval 
+            rr,~,~ =  findnz(sum(X,2))  #sort!(unique(X.rowval ))
             vv = [ potentialvv[X[i,:]'.rowval] for i = rr] #Get the mapping from VV to column
-            cc = repmat([i],length(rr),1)
-            #=
-            rrrr,vvvv,~ = findnz(A2adj[:,rrr])
-            rrrri = sortperm(rrrr)
-            rrrr = sort(rrrr);
-            vv = rrr[vvvv[rrrri]]
-            vv = RowB[vv]
-            v = [v;vv]
-            =#
+            #cc = repmat([i],length(rr),1)
+            vv = [join(v,";")*";" for v = vv]
+ #           vvv[(1+currIndex):(currIndex+size(vv,1) )]  = vv
+            vvv = [vvv;vv]
+            currIndex += size(vv,1)
         end
-#=
+        vKey = sort(unique(vvv))
+        vvv= [searchsortedfirst(vKey,v) for v in vvv]
+        println(size(rrr,1));
+        println(size(ccc,1));
+        println(size(vvv,1));
+
+ 
+        AB.A = sparse(rrr,ccc,vvv)
+        AB.val = vKey
+=#
+
+#=  Approach #1 Ten-Thousandth GFlops performance
         AB = A*B
-#        A1 = A[Row(AB),:]
-#        B1 = B[:,Col(AB)]
-#        A  = A1[:,Row(B1)]
-#        B  = B1[Col(A1),:]
+        A1 = A[Row(AB),:]
+        B1 = B[:,Col(AB)]
+        A  = A1[:,Row(B1)]
+        B  = B1[Col(A1),:]
         rrr,ccc,~ = findnz(Adj(AB))
         ABVal = Array(Union{AbstractString,Number},length(rrr))
         AA = Adj(A)
@@ -57,7 +71,8 @@ function CatKeyMul(A::Assoc,B::Assoc)
             ABVal[i] = val
         end
         AB.val = ABVal
-        return AB=#
+        =#
+        return AB
     else
         return A*B
     end

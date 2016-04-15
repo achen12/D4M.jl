@@ -15,6 +15,7 @@ function find(A::Assoc)
     end
     
     if isa(A.val[1],AbstractString)
+        #TODO need to assert & convert val into Array of indice 
         val = [ A.val[val[i]] for i in 1:n]
     end
 
