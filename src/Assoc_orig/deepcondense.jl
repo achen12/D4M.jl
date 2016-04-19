@@ -5,8 +5,8 @@ deepCondense : remove empty mapping of row, column, and value, and return the co
 function deepCondense(A::Assoc)
     Anew = condense(A)
     row,col,val = findnz(Anew.A)
-    uniVal = sort!(unique(val))
-    val = Array{Int64,1}(pmap(x -> searchsortedfirst(uniVal,x), val))
+    uniVal = sort(unique(val))
+    val = Array{Int64,1}(map(x -> searchsortedfirst(uniVal,x), val))
     #At this point val is the mapping to uniVal
     Anew.A = sparse(row,col,val)
 

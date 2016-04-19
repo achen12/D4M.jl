@@ -4,7 +4,7 @@ module D4M
 
     #=
         Loaded Example
-    =#
+    
     module_dir = Pkg.dir("D4M")
     ParallelDatabase_dir = module_dir*"/examples/3Scaling/2ParallelDatabase"
     example_3Scaling_2ParallelDatabase_pDB01_DataTEST = () -> include( ParallelDatabase_dir *"/pDB01_DataTEST.jl")
@@ -37,7 +37,7 @@ module D4M
     example_3Scaling_3MatrixPerformance_MP4_AssocCatKeyTEST = () -> include( MatrixPerformance_dir * "/MP4_AssocCatKeyTEST.jl")
     example_3Scaling_3MatrixPerformance_MP5_AssocCatValKeyTEST = () -> include( MatrixPerformance_dir * "/MP5_AssocCatValKeyTEST.jl")
     example_3Scaling_3MatrixPerformance_MP6_AssocPlusTEST = () -> include( MatrixPerformance_dir * "/MP6_AssocPlusTEST.jl")
-
+    =#
 end
 
 

@@ -9,7 +9,7 @@ function getindex(A::Assoc, i::Array{Int64}, j::Array{Int64})
     return Assoc([1],[1],0,(+))
     end
 
-    return deepCondense(Assoc(A.row[i],A.col[j],A.val,A.A[i,j]))
+    return condense(Assoc(A.row[i],A.col[j],A.val,A.A[i,j]))
     end
 
 #Singular Case
@@ -25,9 +25,16 @@ PreviousTypes = Array{Int64}
 
 #Get index with basic addressing.
 #Variations between Element, Array, Colon, Range
-getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::PreviousTypes)                                       = getindex(A,[searchsortedfirst(A.row,x) for x in i],j)
-getindex(A::Assoc,i::PreviousTypes,j::Array{Union{AbstractString,Number}})                                       = getindex(A,i,[searchsortedfirst(A.col,x) for x in j])
-getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::Array{Union{AbstractString,Number}})                 = getindex(A,[searchsortedfirst(A.row,x) for x in i],[searchsortedfirst(A.col,x) for x in j])
+
+getindex(A::Assoc,i::Colon,j::PreviousTypes)         = getindex(A,1:size(A.row,1),j)
+getindex(A::Assoc,i::PreviousTypes,j::Colon)         = getindex(A,i,1:size(A.col,1))
+getindex(A::Assoc,i::Colon,j::Colon)                 = getindex(A,1:size(A.row,1),1:size(A.col,1))
+
+PreviousTypes = Union{PreviousTypes,Colon}
+
+getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::PreviousTypes)                                       = getindex(A,searchsortedmapping(unique(sort(i)),A.row) ,j)
+getindex(A::Assoc,i::PreviousTypes,j::Array{Union{AbstractString,Number}})                                       = getindex(A,i,searchsortedmapping(unique(sort(j)),A.col))
+getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::Array{Union{AbstractString,Number}})                 = getindex(A,searchsortedmapping(unique(sort(i)),A.row), searchsortedmapping(unique(sort(j)),A.col))
 
 PreviousTypes = Union{PreviousTypes,Array{Union{AbstractString,Number}}}
 
@@ -37,11 +44,6 @@ getindex(A::Assoc,i::Int64,j::Int64)                 = getindex(A,[i],[j])
 
 PreviousTypes = Union{PreviousTypes,Int64}
 
-getindex(A::Assoc,i::Colon,j::PreviousTypes)         = getindex(A,1:size(A.row,1),j)
-getindex(A::Assoc,i::PreviousTypes,j::Colon)         = getindex(A,i,1:size(A.col,1))
-getindex(A::Assoc,i::Colon,j::Colon)                 = getindex(A,1:size(A.row,1),1:size(A.col,1))
-
-PreviousTypes = Union{PreviousTypes,Colon}
 
 getindex(A::Assoc,i::Range,j::PreviousTypes)         = getindex(A,collect(i),j)
 getindex(A::Assoc,i::PreviousTypes,j::Range)         = getindex(A,i,collect(j))

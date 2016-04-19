@@ -13,26 +13,31 @@ function CatKeyMul(A::Assoc,B::Assoc)
     AdjA = AdjA .!= 0
     rrr,ccc,~ = findnz(AdjB)
     rMax = AdjB.m
-    vvv = map(r-> big(2)^(rMax-r),rrr)
+    @time vvv = map(r-> big(2)^(rMax-r),rrr)
     vvv = convert(Array{BigInt},vvv)
     #AdjB.nzval = vvv
     AdjB = sparse(rrr,ccc,vvv)  #This is now a BigInt-val Sparse Matrix
-    AdjC = AdjA*AdjB  #Now Value of AdjC represents the set of Brow 
+    @time AdjC = AdjA*AdjB  #Now Value of AdjC represents the set of Brow 
     rrr,ccc,vvv = findnz(AdjC)
     #Construct value mapping
     vKey = sort(unique(vvv))
     lvKey = length(vKey)
-    vvv = map( v-> lvKey-searchsortedlast(vKey, v),vvv)
-    vKey = map(v -> join(find(reverse(digits(v,2,rMax))),";")*";",vKey) #convert to array representation
+    @time vvv = map( v-> lvKey-searchsortedlast(vKey, v),vvv)
+    @time vKey = map(v -> join(find(reverse(digits(v,2,rMax))),";")*";",vKey) #convert to array representation
 #    vKey = map(v-> join(v,";")*";",vKey) #convert to string representatation
-    vKey = convert(Array{Union{AbstractString,Number}},reverse(vKey))
+    @time vKey = convert(Array{Union{AbstractString,Number}},reverse(vKey))
     AB  = Assoc(Row(A),Col(B),vKey,sparse(rrr,ccc,vvv))
     =#
 
-    #= Approach #2 Ten-thousandth GFlops performance
-        AB = logical(A)*logical(B);
-        A1 = A[Row(AB),:];  B1 = B[:,Col(AB)];
-        A2 = A1[:,Row(B1)]; B2 = B1[Col(A1),:];
+    # Approach #2 Ten-thousandth GFlops performance
+    A = logical(A);
+    B = logical(B);
+          AB = A*B;
+
+        #A1 = A[Row(AB),:];  B1 = B[:,Col(AB)];
+        
+        #A2 = A1[:,sortedintersect(Row(B1),Col(A1))]; B2 = B1[sortedintersect(Col(A1),Row(B1)),:];
+        A2= A; B2 = B;
         A2size = size(Adj(A2));  B2size = size(Adj(B2));
 
         A2adj = Adj(A2);
@@ -40,44 +45,44 @@ function CatKeyMul(A::Assoc,B::Assoc)
 
         B2adj = Adj(B2);
         
-        rrr,ccc,~ = findnz(Adj(AB))
 #        v = Array{Array{Union{AbstractString,Number},1},1}()
 #        vvv = Array(Union{AbstractString,Number}, length(rrr))
         vvv = Array{Union{AbstractString,Number},1}()
         RowB = Row(B)
-        currIndex = 0;
-        for i = 1:B2size[2]
-            potentialvv, ~, ~  = findnz(B2adj[:,i])
+        
+        @time for i = 1:B2size[2]
+            potentialvv = B2adj[:,i].rowval
             X = A2adj[:,potentialvv] #reduce to just the potential for this column from B
-            rr,~,~ =  findnz(sum(X,2))  #sort!(unique(X.rowval ))
-            vv = [ potentialvv[X[i,:]'.rowval] for i = rr] #Get the mapping from VV to column
-            #cc = repmat([i],length(rr),1)
- #            vv = [join(v,";")*";" for v = vv]
- #           vvv[(1+currIndex):(currIndex+size(vv,1) )]  = vv
+            vv = potentialvv[X'.rowval]  #Get the mapping from VV to column
             vvv = [vvv;vv]
-            currIndex += size(vv,1)
         end
         
-        vKey = [join(v,";")*";" for v in unique(copy(vvv))]
-        vKey = sort(vKey)
+        @time rrr,ccc,v = findnz(Adj(AB))
+        @time vvv = join(vvv,"; ") * "; "
+        vind0 = find(vvv.data .== ' ')
+        ABvCum = cumsum(v)
+        vvv.data[vind0[ABvCum]] = ',';
+        vvv = vvv[find(vvv.data .!= ' ')]
 
-        vvv= [searchsortedfirst(vKey,v) for v in vvv]
-        println(size(rrr,1));
-        println(size(ccc,1));
-        println(size(vvv,1));
+        vKey,~,vvv = StrUnique(vvv);
 
- 
         AB.A = sparse(rrr,ccc,vvv)
         AB.val = vKey
-=#
+        #TODO map vKey to RowB
+        #
+        
+#        AB = A*B
 
 #=  Approach #1 Ten-Thousandth GFlops performance
+        A = logical(A)
+        B = logical(B)
         AB = A*B
         A1 = A[Row(AB),:]
         B1 = B[:,Col(AB)]
         A  = A1[:,Row(B1)]
         B  = B1[Col(A1),:]
         rrr,ccc,~ = findnz(Adj(AB))
+
         ABVal = Array(Union{AbstractString,Number},length(rrr))
         AA = Adj(A)
         BA = Adj(B)

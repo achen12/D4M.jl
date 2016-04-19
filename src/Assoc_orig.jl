@@ -22,8 +22,8 @@ type Assoc
     val::Array{Union{AbstractString,Number}}
     A::AbstractSparseMatrix
     
-    Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) 
-    Assoc(row::Array{Int64}, col::Array{Int64},val::Array{Int64},A::AbstractSparseMatrix) = new(row,col,val,A)
+    #Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) 
+    #Assoc(row::Array{Int64}, col::Array{Int64},val::Array{Int64},A::AbstractSparseMatrix) = new(row,col,val,A)
     #Setting Default Function
     
 
@@ -32,7 +32,7 @@ type Assoc
         end
 
     function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function=min)
-        if isempty(rowIn) || isempty(colIn) || isempty(valIn)  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
+        if (isempty(rowIn) || isempty(colIn) || isempty(valIn))  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
             x = Array{Union{AbstractString,Number}}()
             return Assoc(x,x,x,spzeros(1,1));
             end
@@ -78,7 +78,7 @@ type Assoc
 
         if isa(valIn,AbstractString)
             val, v_out2in, v = StrUnique(valIn);           
-            else
+        else
             val = unique(v)
             sort!(val)
             if (isa(valIn[1],AbstractString))
@@ -130,9 +130,8 @@ type Assoc
         end
         #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
-        
-        #End bit with val string.  Unknown purpose.
-        return new(row,col,val,A)
+        arrayType = Array{Union{AbstractString,Number}}
+        return new(arrayType(row),arrayType(col),arrayType(val),A)
         end
     end
 
