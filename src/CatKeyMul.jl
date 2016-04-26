@@ -34,31 +34,46 @@ function CatKeyMul(A::Assoc,B::Assoc)
     B = logical(B);
           AB = A*B;
 
-        #A1 = A[Row(AB),:];  B1 = B[:,Col(AB)];
-        
-        #A2 = A1[:,sortedintersect(Row(B1),Col(A1))]; B2 = B1[sortedintersect(Col(A1),Row(B1)),:];
-        A2= A; B2 = B;
+        A1 = A[Row(AB),:];  B1 = B[:,Col(AB)];
+        ABintersect = sortedintersect(Row(B1),Col(A1))
+        A2 = A1[:,ABintersect]; B2 = B1[ABintersect,:];
+#        A2= A; B2 = B;
         A2size = size(Adj(A2));  B2size = size(Adj(B2));
 
         A2adj = Adj(A2);
         A2col = Col(A2);
 
         B2adj = Adj(B2);
-        
+        A1 = 0
+        A2 = 0
+        B1 = 0
+        B2 = 0
 #        v = Array{Array{Union{AbstractString,Number},1},1}()
 #        vvv = Array(Union{AbstractString,Number}, length(rrr))
         vvv = Array{Union{AbstractString,Number},1}()
         RowB = Row(B)
         
+        rrr,ccc,v = findnz(Adj(AB))
+
         @time for i = 1:B2size[2]
-            potentialvv = B2adj[:,i].rowval
-            X = A2adj[:,potentialvv] #reduce to just the potential for this column from B
-            vv = potentialvv[X'.rowval]  #Get the mapping from VV to column
-            vvv = [vvv;vv]
+            potentialvv,~ = findn(B2adj[:,i]);
+#            X = A2adj[:,potentialvv] #reduce to just the potential for this column from B
+#            vv = potentialvv[X'.rowval]  #Get the mapping from VV to column
+            rrrr,vvvv = findn(A2adj[:,potentialvv]);
+            vvvv = getindex(vvvv,sortperm(rrrr,alg=QuickSort));
+            vv = RowB[potentialvv[vvvv]];
+            potentialvv = 0;
+            rrrr = 0;
+            vvvv = 0;
+            vvv = [vvv;vv];
+            vv = 0; 
         end
-        
-        @time rrr,ccc,v = findnz(Adj(AB))
-        @time vvv = join(vvv,"; ") * "; "
+        A2adj = 0
+        B2adj = 0
+
+
+        rrr,ccc,v = findnz(Adj(AB))
+        vvv = join(vvv,"; ") * "; "
         vind0 = find(vvv.data .== ' ')
         ABvCum = cumsum(v)
         vvv.data[vind0[ABvCum]] = ',';
