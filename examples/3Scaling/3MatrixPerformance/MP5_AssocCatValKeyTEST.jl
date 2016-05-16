@@ -14,14 +14,21 @@ assoc_gflops = zeros(1,length(n))
 assoc_time = zeros(1,length(n))
 
 for i = 1:length(n)
-    
-    ii = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    jj = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    A = Assoc(ii,jj,1.0)
 
-    ii = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    jj = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    B = Assoc(ii,jj,1.0)
+    ii = round(Int, floor(rand(m[i]) .* n[i]) +1)
+    ii = join(ii,",") *","
+    jj = round(Int, floor(rand(m[i]) .* n[i]) +1)
+    jj = join(jj,",") *","
+    ii = AbstractString(ii)
+    jj = AbstractString(jj)
+    A = Assoc(ii,jj,"1.0",min)
+    ii = round(Int, floor(rand(m[i]) .* n[i]) +1)
+    ii = join(ii,",") *","
+    jj = round(Int, floor(rand(m[i]) .* n[i]) +1)
+    jj = join(jj,",") *","
+    ii = AbstractString(ii)
+    jj = AbstractString(jj)
+    B = Assoc(ii,jj,"1.0")
 
     tic()
         C = CatValMul(A,B)

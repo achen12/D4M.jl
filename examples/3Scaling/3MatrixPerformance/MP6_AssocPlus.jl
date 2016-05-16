@@ -18,12 +18,14 @@ for i = 1:length(n)
     
     ii = round(Int, floor(rand(m[i]) .* n[i]) +1) 
     jj = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    A = Assoc(ii,jj,1.0)
+    A = logical(Assoc(ii,jj,1.0))
 
+    assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     ii = round(Int, floor(rand(m[i]) .* n[i]) +1) 
     jj = round(Int, floor(rand(m[i]) .* n[i]) +1) 
-    B = Assoc(ii,jj,1.0)
+    B = logical(Assoc(ii,jj,1.0))
 
+    assoc_gbytes[i] = assoc_gbytes[i] + (length(ii) + length(jj)) + 8 .* m[i] ./ 1e9
     tic()
     C = A+B
     assoc_time[i] = toq()
