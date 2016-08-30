@@ -1,13 +1,7 @@
-function abs(A:Assoc)
-    #abs: Absolutee value of an inputted numerical associative array.
+function Abs0(A::Assoc)
+    #Abs: Converts associative array into binary adjacency matrix with double values.
 
-    if isempty(A.val)
-        error("Using non numerical associative array for abs is not recommended.")
-    end
-
-    AT = deepcopy(A)
-    AT.A = abs(AT.A)
-    return AT
+    return double(logical(A))
 end
 
 ########################################################

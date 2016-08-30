@@ -23,8 +23,8 @@ BB = round(Int64,BB)
 
 ABA = AA & BB 
 ABA = ABA * 1.0
-
-return Assoc(ABrow,ABcol,promote([1.0],A.val)[1],ABA) 
+#TODO Doesn't seems to handle union of two non Numeric case...  Perhaps an isolated ressole?
+return Assoc(ABrow,ABcol,AssocEleArray,ABA) 
 end
 
 

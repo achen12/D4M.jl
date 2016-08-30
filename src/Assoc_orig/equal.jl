@@ -2,7 +2,7 @@ import Base.(==)
 #=
 == : get a new Assoc where all of the elements of input Assoc mataches the given Element.
 =#
-function ==(A::Assoc, E::Union{AbstractString,Number})
+function ==(A::Assoc, E::AssocEleType)
     tarIndex = searchsortedfirst(A.val,E)
     if (isa(E,Number) & (size(Val(A),1)==1) & (Val(A)[1] == 1.0)  ) 
         tarIndex = E
@@ -15,7 +15,7 @@ function ==(A::Assoc, E::Union{AbstractString,Number})
     return A[rowkey[mapping],colkey[mapping]]
 end
 
-==(E::Union{AbstractString,Number},A::Assoc) = (A == E)
+==(E::AssocEleType,A::Assoc) = (A == E)
 
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model

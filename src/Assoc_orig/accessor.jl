@@ -1,29 +1,27 @@
 
 #=
-Protected Accessor Function for User.
+Accessor Function for User.
 =#
 function Adj(A::Assoc)
     return copy(A.A)
 end
 
 function Col(A::Assoc)
-    if isa(A.col[1], AbstractString)
+    if !isempty(A.col)
         return copy(A.col)
     end
-    return 1:size(A.A,2)
+    return AssocEleArray(collect(1:size(A.A,2)))
 end
 
-
-
 function Row(A::Assoc)
-    if isa(A.row[1], AbstractString)
+    if !isempty(A.row)
         return copy(A.row)
     end
-    return 1:size(A.A,1)
+    return AssocEleArray(collect(1:size(A.A,1)))
 end
 
 function Val(A::Assoc)
-    if isa(A.col[1], AbstractString)
+    if !isempty(A.val)
         return copy(A.val)
     end
     return sort(unique(nonzeros(A.A)))

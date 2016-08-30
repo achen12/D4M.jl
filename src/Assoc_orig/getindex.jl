@@ -32,11 +32,11 @@ getindex(A::Assoc,i::Colon,j::Colon)                 = getindex(A,1:size(A.row,1
 
 PreviousTypes = Union{PreviousTypes,Colon}
 
-getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::PreviousTypes)                                       = getindex(A,searchsortedmapping(unique(sort(i)),A.row) ,j)
-getindex(A::Assoc,i::PreviousTypes,j::Array{Union{AbstractString,Number}})                                       = getindex(A,i,searchsortedmapping(unique(sort(j)),A.col))
-getindex(A::Assoc,i::Array{Union{AbstractString,Number}},j::Array{Union{AbstractString,Number}})                 = getindex(A,searchsortedmapping(unique(sort(i)),A.row), searchsortedmapping(unique(sort(j)),A.col))
+getindex(A::Assoc,i::AssocEleArray,j::PreviousTypes)                                       = getindex(A,searchsortedmapping(unique(sort(i)),A.row) ,j)
+getindex(A::Assoc,i::PreviousTypes,j::AssocEleArray)                                       = getindex(A,i,searchsortedmapping(unique(sort(j)),A.col))
+getindex(A::Assoc,i::AssocEleArray,j::AssocEleArray)                 = getindex(A,searchsortedmapping(unique(sort(i)),A.row), searchsortedmapping(unique(sort(j)),A.col))
 
-PreviousTypes = Union{PreviousTypes,Array{Union{AbstractString,Number}}}
+PreviousTypes = Union{PreviousTypes,AssocEleArray}
 
 getindex(A::Assoc,i::Int64,j::PreviousTypes)         = getindex(A,[i],j)
 getindex(A::Assoc,i::PreviousTypes,j::Int64)         = getindex(A,i,[j])
@@ -75,7 +75,7 @@ type StartsWith
     inputString::AbstractString
 end
 
-function StartsWithHelper(Ar::Array{Union{AbstractString,Number}},S::StartsWith)
+function StartsWithHelper(Ar::AssocEleArray,S::StartsWith)
     str_list = []
     if S.inputString[end] == ','
         str_list,~ = StrUnique(S.inputString)

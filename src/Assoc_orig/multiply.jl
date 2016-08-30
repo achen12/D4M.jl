@@ -11,10 +11,10 @@ function *(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical
     At = A
     Bt = B
-    if(!isa(A.val[1],Number))
+    if(!isempty(A.val))
         At = logical(A)
     end
-    if(!isa(B.val[1],Number))
+    if(!isempty(B.val))
         Bt = logical(B)
     end
     ## A*B operation
@@ -25,22 +25,22 @@ function *(A::Assoc,B::Assoc)
 #        return Assoc([1],[1],0,(+))
 #    end
     
-#    AintMap = searchsortedmapping(ABintersect,At.col) 
-#    BintMap = searchsortedmapping(ABintersect,Bt.row) 
+    AintMap = searchsortedmapping(ABintersect,At.col) 
+    BintMap = searchsortedmapping(ABintersect,Bt.row) 
 
-    Aref = @spawn searchsortedmapping(ABintersect,At.col)
-    Bref = @spawn searchsortedmapping(ABintersect,Bt.row)
-    AintMap = fetch(Aref)
-    BintMap = fetch(Bref)
-#    AintMap, BintMap = sortedintersectmapping(At.col,Bt.row)
+#    Aref = @spawn searchsortedmapping(ABintersect,At.col)
+#    Bref = @spawn searchsortedmapping(ABintersect,Bt.row)
+#    AintMap = fetch(Aref)
+#    BintMap = fetch(Bref)
+    AintMap, BintMap = sortedintersectmapping(At.col,Bt.row)
 
 #    AintMap,BintMap = map(x -> searchsortedmapping(x[1],x[2]),[(ABintersect,At.col) (ABintersect, Bt.row)])
-    Aref = @spawn At.A[:,AintMap]
-    Bref = @spawn Bt.A[BintMap,:]
-    AA = fetch(Aref)
-    BB = fetch(Bref)
+#    Aref = @spawn At.A[:,AintMap]
+#    Bref = @spawn Bt.A[BintMap,:]
+#    AA = fetch(Aref)
+#    BB = fetch(Bref)
 
-    ABA = AA*BB
+    ABA = At.A[:,AintMap]*Bt.A[BintMap,:]
 
     AB = Assoc(At.row,Bt.col,Array{Union{AbstractString,Number}}([1.0]),ABA)
 

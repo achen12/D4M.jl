@@ -7,6 +7,8 @@ isless(A::AbstractString,B::Number) = true
 
 StringOrNumArray = Union{AbstractString,Array,Number}
 
+AssocEleType = Union{AbstractString,Number}
+AssocEleArray = Array{AssocEleType,1}
 #Creation of Assoc require StrUnique to split Single-Character-separated String Sequence.
 include("StrUnique.jl")
 
@@ -17,9 +19,9 @@ Support a
 
 
 type Assoc
-    row::Array{Union{AbstractString,Number}}
-    col::Array{Union{AbstractString,Number}}
-    val::Array{Union{AbstractString,Number}}
+    row::AssocEleArray
+    col::AssocEleArray
+    val::AssocEleArray
     A::AbstractSparseMatrix
     
     #Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray) = Assoc(rowIn,colIn,valIn,min) 
@@ -27,27 +29,27 @@ type Assoc
     #Setting Default Function
     
 
-    function Assoc(rowIn::Array{Union{AbstractString,Number}}, colIn::Array{Union{AbstractString,Number}}, valIn::Array{Union{AbstractString,Number}}, AIn::AbstractSparseMatrix)
+    function Assoc(rowIn::AssocEleArray, colIn::AssocEleArray, valIn::AssocEleArray, AIn::AbstractSparseMatrix)
         return new(rowIn,colIn,valIn,AIn)
         end
 
     function Assoc(rowIn::StringOrNumArray,colIn::StringOrNumArray,valIn::StringOrNumArray,funcIn::Function=min)
         if (isempty(rowIn) || isempty(colIn) || isempty(valIn))  #testing needed for isemtpy, for Matlab isemtpy is always possible TODO  Seems to work okay with String or NumArray type hard defined, Union type untested.  Should keep an eye.
-            x = Array{Union{AbstractString,Number}}()
+            x = AssocEleArray()
             return Assoc(x,x,x,spzeros(1,1));
             end
         if isa(rowIn,Number)
-            rowIn = Array{Union{AbstractString,Number},1}([rowIn])
+            rowIn = AssocEleArray([rowIn])
         end
 
         if isa(colIn,Number)
 
-            colIn = Array{Union{AbstractString,Number},1}([colIn])
+            colIn = AssocEleArray([colIn])
         end
 
 
         if isa(valIn,Number)
-            valIn = Array{Union{AbstractString,Number},1}([valIn])
+            valIn = AssocEleArray([valIn])
         end
         i = rowIn;
         j = colIn;
@@ -130,15 +132,14 @@ type Assoc
         end
         #Accumarray isn't in Julia, use "push" for a more rapid array generation (acccumarray is too slow and cumbersome for Julia)  Sparse matrix generation condition with summation combine seem would do the trick.
 
-        arrayType = Array{Union{AbstractString,Number}}
-        return new(arrayType(row),arrayType(col),arrayType(val),A)
+        return new(AssocEleArray(row),AssocEleArray(col),AssocEleArray(val),A)
         end
     end
-
 
 #=
 Adding related operations for Assoc_orig
 =#
+include("./Assoc_orig/Abs0.jl")
 include("./Assoc_orig/getindex.jl")
 include("./Assoc_orig/condense.jl")
 include("./Assoc_orig/no.jl")
@@ -163,6 +164,7 @@ include("./Assoc_orig/spy.jl")
 include("./Assoc_orig/jld.jl")
 include("./Assoc_orig/put.jl")
 include("./Assoc_orig/full.jl")
+include("./Assoc_orig/nnz.jl")
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model
 # Architect: Dr. Jeremy Kepner (kepner@ll.mit.edu)

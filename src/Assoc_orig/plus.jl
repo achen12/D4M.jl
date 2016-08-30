@@ -18,11 +18,11 @@ function plus(A::Assoc,B::Assoc)
     Bt = B;
 
     #For numeric Case 
-    if(isa(Val(A)[1],Number) || isa(Val(A)[1],Number))
-        if(A.val != [1.0])
+    if(isempty(A.val) || isempty(B.val))
+        if !isempty(A.val)
             At = logical(A);
         end
-        if(B.val != [1.0])
+        if !isempty(B.val)
             Bt = logical(B);
         end
         ## A+B operation
@@ -34,7 +34,7 @@ function plus(A::Assoc,B::Assoc)
         Bcol = searchsortedmapping(Bt.col,ABcol)
         ABA[Arow,Acol] += At.A
         ABA[Brow,Bcol] += Bt.A
-        AB = Assoc(ABrow,ABcol, Array{Union{AbstractString,Number}}([1.0]), ABA) 
+        AB = Assoc(ABrow,ABcol, AssocEleArray(), ABA) 
         
         return condense(AB) #Incase of negation
     else

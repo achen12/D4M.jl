@@ -1,6 +1,6 @@
 import Base.-
 
-
+#TODO Doesn't seem to handle the nonnumeric cases
 -(A::Assoc,B::Assoc) = minus(A::Assoc,B::Assoc)
 function minus(A::Assoc,B::Assoc)
     #Check A,B, if string => Logical

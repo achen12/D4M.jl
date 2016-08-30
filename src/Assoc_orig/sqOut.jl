@@ -1,6 +1,7 @@
 function sqOut(A::Assoc)
     AtA = deepcopy(A)
-    if ! isa(A.val[1], Number)
+    if !isempty(A)
+        warn("Using non numerical associative array for sqOut is not recommended.")
         AtA = logical(A)
     end
     AA = Adj(AtA)

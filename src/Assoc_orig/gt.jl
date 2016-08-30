@@ -2,7 +2,8 @@ import Base.(>)
 #=
 == : get a new Assoc where all of the elements of input Assoc mataches the given Element.
 =#
-function >(A::Assoc, E::Union{AbstractString,Number})
+#TODO Should check on how this is going... still have some dev footprints
+function >(A::Assoc, E::AssocEleType)
     tarIndex = searchsortedfirst(Val(A),E)
     if !(E == Val(A)[tarIndex])
         tarIndex = tarIndex-1
@@ -18,7 +19,7 @@ function >(A::Assoc, E::Union{AbstractString,Number})
     return Assoc(rows[mapping],cols[mapping],vals[mapping])
 end
 
->(E::Union{AbstractString,Number},A::Assoc) = (A < E)
+>(E::AssocEleType,A::Assoc) = (A < E)
 
 ########################################################
 # D4M: Dynamic Distributed Dimensional Data Model

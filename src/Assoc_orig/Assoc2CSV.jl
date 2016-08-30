@@ -1,13 +1,9 @@
-function abs(A:Assoc)
-    #abs: Absolutee value of an inputted numerical associative array.
-
-    if isempty(A.val)
-        error("Using non numerical associative array for abs is not recommended.")
-    end
-
-    AT = deepcopy(A)
-    AT.A = abs(AT.A)
-    return AT
+function Assoc2CSV(A::Assoc,rowSep::Char,colSep::Char,fileName::AbstractString)
+    #Assoc2CSV: save Assoc to CSV file
+    CsvStr  = Assoc2CSVstr(A,rowSep,colSep) 
+    f = open(fileName,"w")
+    write(f, CsvStr)
+    close(f)
 end
 
 ########################################################

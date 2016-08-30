@@ -4,18 +4,20 @@ deepCondense : remove empty mapping of row, column, and value, and return the co
 =#
 function deepCondense(A::Assoc)
     Anew = condense(A)
+    #if Assoc is already numeric, there isn't any reason to condense in val,
+    #Because, the sparse matrix is keeping track of the values.
+    if isempty(A.val)
+        return Anew
+    end
+    #Below is for the case of nonnumeric Assoc 
     row,col,val = findnz(Anew.A)
     uniVal = sort(unique(val))
     val = Array{Int64,1}(map(x -> searchsortedfirst(uniVal,x), val))
     #At this point val is the mapping to uniVal
     Anew.A = sparse(row,col,val)
 
-    if A.val == [1.0] #Checking if the A.val mapping needs to be done.
-        Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
-    else
-        uniVal = map(x -> Anew.val[x],uniVal)
-        Anew.val = Array{Union{AbstractString,Number},1}(uniVal)
-    end
+    uniVal = map(x -> Anew.val[x],uniVal)
+    Anew.val = AssocEleArray(uniVal)
     return Anew
     
 end

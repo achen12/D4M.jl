@@ -6,17 +6,16 @@ function find(A::Assoc)
     row, col, val = findnz(A.A)
     n = nnz(A.A)
     #map if the Associative array isn't numerical
-    if isa(A.row[1],AbstractString)
-        row = [ A.row[row[i]] for i in 1:n]
+    if !isempty(A.row)
+        row = [ A.row[i] for i in row]
     end
 
-    if isa(A.col[1],AbstractString)
-        col = [ A.col[col[i]] for i in 1:n]
+    if !isempty(A.col)
+        col = [ A.col[i] for i in col]
     end
     
-    if isa(A.val[1],AbstractString)
-        #TODO need to assert & convert val into Array of indice 
-        val = [ A.val[val[i]] for i in 1:n]
+    if !isempty(A.val)
+        val = [ A.val[i] for i in val]
     end
 
     return row, col, val

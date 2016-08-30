@@ -39,7 +39,9 @@ module D4M
     example_3Scaling_3MatrixPerformance_MP6_AssocPlusTEST = () -> include( MatrixPerformance_dir * "/MP6_AssocPlusTEST.jl")
     =#
 end
+export d4mEleType
 
+d4mEleType = Union{AbstractString,Number}
 
 include("Assoc_orig.jl") # Associative Array
 include("WriteCSV.jl") #load Assoc from CSV file

@@ -82,7 +82,7 @@ function JLD.readas(serData::AssocSerial)
     if serData.rownum != ""
         row = vcat(row, map(float,split(serData.rownum,",")));
     end
-    row = Array{Union{AbstractString,Number}}(row)
+    row = AssocEleArray(row)
 
     col = []
     if serData.colstr != ""
@@ -91,7 +91,7 @@ function JLD.readas(serData::AssocSerial)
     if serData.colnum != ""
         col = vcat(col, map(float,split(serData.colnum,",")));
     end
-    col = Array{Union{AbstractString,Number}}(col)
+    col = AssocEleArray(col)
     
     val = []
     if serData.valstr != ""
@@ -100,7 +100,7 @@ function JLD.readas(serData::AssocSerial)
     if serData.valnum != ""
         val = vcat(val, map(float,split(serData.valnum,",")));
     end
-    val = Array{Union{AbstractString,Number}}(val)
+    val = AssocEleArray(val)
     
     
 

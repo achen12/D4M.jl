@@ -1,13 +1,9 @@
-function abs(A:Assoc)
-    #abs: Absolutee value of an inputted numerical associative array.
 
-    if isempty(A.val)
-        error("Using non numerical associative array for abs is not recommended.")
-    end
+import Base.nnz
+function nnz(A::Assoc)
+    #nnz: Returns numbers of non-zeros 
 
-    AT = deepcopy(A)
-    AT.A = abs(AT.A)
-    return AT
+    return nnz(A.A)
 end
 
 ########################################################

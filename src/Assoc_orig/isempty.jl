@@ -3,7 +3,7 @@ import Base.isempty
 #=
 isempty : check if given Assoc is empty.
 
-Note: Associ can be considered empty even if there are mapping for potential or past values.
+Note: Assoc can be considered empty even if there are mapping for potential or past values.
 =#
 function isempty(A::Assoc)
     return isempty(A.A)

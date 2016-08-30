@@ -2,10 +2,10 @@
 
  sqIn : 
 =#
-
+#TODO documentation
 function sqIn(A::Assoc)
     AtA = deepcopy(A)
-    if ! isa(A.val[1], Number)
+    if !isempty(A)
         AtA = logical(A)
     end
 
